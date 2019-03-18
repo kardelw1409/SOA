@@ -149,6 +149,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903180959438_InitialCreate.cs" />
+    <Compile Include="Migrations\201903180959438_InitialCreate.Designer.cs">
+      <DependentUpon>201903180959438_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903181104174_MigrateDB.cs" />
+    <Compile Include="Migrations\201903181104174_MigrateDB.Designer.cs">
+      <DependentUpon>201903181104174_MigrateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903181108001_MigrateDB1.cs" />
+    <Compile Include="Migrations\201903181108001_MigrateDB1.Designer.cs">
+      <DependentUpon>201903181108001_MigrateDB1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DbContext.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +220,17 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903180959438_InitialCreate.resx">
+      <DependentUpon>201903180959438_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903181104174_MigrateDB.resx">
+      <DependentUpon>201903181104174_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903181108001_MigrateDB1.resx">
+      <DependentUpon>201903181108001_MigrateDB1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
