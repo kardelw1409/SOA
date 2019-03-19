@@ -3,6 +3,7 @@ using CurriculumProject.Interfaces;
 using CurriculumProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -38,17 +39,18 @@ namespace CurriculumProject.Repositories
 
         public Faculty Get(int id)
         {
-            throw new NotImplementedException();
+            return db.Faculties.Find(id);
         }
 
         public IEnumerable<Faculty> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Faculties;
+                 
         }
 
-        public void Update(Faculty item)
+        public void Update(Faculty faculty)
         {
-            throw new NotImplementedException();
+            db.Entry(faculty).State = EntityState.Modified;
         }
     }
 }

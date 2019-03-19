@@ -6,11 +6,12 @@ using System.Web;
 
 namespace CurriculumProject.Interfaces
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        IRepository<Department> Departments { get; set; }
-        IRepository<Faculty> Faculties { get; set; }
-        IRepository<Speciality> Specialities { get; set; }
-        IRepository<Subject> Subjects { get; set; }
+        IRepository<Department> Departments { get; }
+        IRepository<Faculty> Faculties { get; }
+        IRepository<Speciality> Specialities { get; }
+        IRepository<Subject> Subjects { get; }
+        void Save();
     }
 }
