@@ -132,7 +132,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Context\CurriculumContext.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -140,8 +142,10 @@
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IRestController.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Faculty.cs" />
     <Compile Include="Models\Speciality.cs" />
     <Compile Include="Models\Subject.cs" />

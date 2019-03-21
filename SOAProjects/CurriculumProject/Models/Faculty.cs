@@ -5,9 +5,8 @@ using System.Web;
 
 namespace CurriculumProject.Models
 {
-    public class Faculty
+    public class Faculty : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
