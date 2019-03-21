@@ -1,4 +1,5 @@
-﻿using CurriculumProject.Infrastructure;
+﻿using CurriculumProject.Context;
+using CurriculumProject.Infrastructure;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
@@ -22,7 +23,8 @@ namespace CurriculumProject
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            NinjectModule serviceModule = new ServiceModule("CurriculumConnection");
+            CurriculumContext context = new CurriculumContext("CurriculumConnection"); 
+            NinjectModule serviceModule = new ServiceModule(context);
             var kernel = new StandardKernel(serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

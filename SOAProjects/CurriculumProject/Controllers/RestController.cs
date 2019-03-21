@@ -1,41 +1,94 @@
 ﻿using CurriculumProject.Interfaces;
+using CurriculumProject.Models;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace CurriculumProject.Controllers
 {
-    public class RestController<T> : IRestController<T>
-        where T : class, new()
-
+    public abstract class RestController<TEntity> : ApiController, IRestController<TEntity>
+        where TEntity : Entity
     {
-        protected IUnitOfWork unitOfWork;
+        protected readonly IUnitOfWork<TEntity> unitOfWork;
+        protected readonly IRepository<TEntity> repository;
 
-        public IHttpActionResult DeleteModel(int id)
+        public RestController(IUnitOfWork<TEntity> unitOf)
         {
-            return null;//to do
+            unitOfWork = unitOf ?? throw new ArgumentNullException(nameof(unitOf));
+            repository = unitOfWork.Repository;
         }
 
-        public IHttpActionResult GetModel(int id)
+        public virtual IHttpActionResult GetEntity(int id)
         {
-            throw new NotImplementedException();
+            TEntity entity = repository.Get(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(entity);
         }
 
-        public IQueryable<T> GetModels()
+        public virtual IQueryable<TEntity> GetEntities()
         {
-            throw new NotImplementedException();
+            return repository.GetAll().AsQueryable();
         }
 
-        public IHttpActionResult PostModel(T model)
+        public virtual IHttpActionResult PostEntity(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            repository.Create(entity);
+
+            return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
         }
 
-        public IHttpActionResult PutModel(int id, T model)
+        public virtual IHttpActionResult PutEntity(int id, TEntity model)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != model.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                repository.Update(model);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EntityExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        public virtual IHttpActionResult DeleteEntity(TEntity entity)
+        {
+            repository.Delete(entity);
+            return Ok(entity);
+        }
+
+        private bool EntityExists(int id)
+        {
+            return repository.Find(e => e.Id == id).Count() > 0;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CurriculumProject.Context
 
         }
 
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<Department> Departments { get; set; }  
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<Subject> Subjects { get; set; }

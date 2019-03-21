@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CurriculumProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,18 +8,18 @@ using System.Web.Http;
 
 namespace CurriculumProject.Interfaces
 {
-    interface IRestController<T>
-        where T : class
+    interface IRestController<TEntity>
+        where TEntity : Entity
     {
         // GET: api/Models
-        IQueryable<T> GetModels();
+        IQueryable<TEntity> GetEntities();
         // GET: api/Models/5
-        IHttpActionResult GetModel(int id);
+        IHttpActionResult GetEntity(int id);
         // PUT: api/Models/5
-        IHttpActionResult PutModel(int id, T model);
+        IHttpActionResult PutEntity(int id, TEntity model);
         // POST: api/Models
-        IHttpActionResult PostModel(T model);
+        IHttpActionResult PostEntity(TEntity model);
         // DELETE: api/Models/5
-        IHttpActionResult DeleteModel(int id);
+        IHttpActionResult DeleteEntity(TEntity entity);
     }
 }
