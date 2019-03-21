@@ -1,4 +1,8 @@
-﻿using System;
+﻿using CurriculumProject.Infrastructure;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +21,10 @@ namespace CurriculumProject
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            NinjectModule serviceModule = new ServiceModule("CurriculumConnection");
+            var kernel = new StandardKernel(serviceModule);
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }
