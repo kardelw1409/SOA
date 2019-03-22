@@ -23,12 +23,32 @@ namespace CurriculumProject.Repositories
         public void Create(TEntity entity)
         {
             dbSet.Add(entity);
+            dbContext.SaveChanges();
         }
 
 
         public void Delete(TEntity entity)
         {
             dbSet.Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (dbContext != null)
+                {
+                    dbContext.Dispose();
+                    dbContext = null;
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
@@ -50,7 +70,7 @@ namespace CurriculumProject.Repositories
         public void Update(TEntity entity)
         {
             dbContext.Entry(entity).State = EntityState.Modified;
-
+            dbContext.SaveChanges();
         }
     }
 }

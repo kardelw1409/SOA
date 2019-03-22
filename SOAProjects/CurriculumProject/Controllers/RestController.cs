@@ -12,13 +12,11 @@ namespace CurriculumProject.Controllers
     public abstract class RestController<TEntity> : ApiController, IRestController<TEntity>
         where TEntity : Entity
     {
-        protected readonly IUnitOfWork<TEntity> unitOfWork;
         protected readonly IRepository<TEntity> repository;
 
-        public RestController(IUnitOfWork<TEntity> unitOf)
+        public RestController(IRepository<TEntity> rep)
         {
-            unitOfWork = unitOf ?? throw new ArgumentNullException(nameof(unitOf));
-            repository = unitOfWork.Repository;
+            repository = rep ?? throw new ArgumentNullException(nameof(rep));
         }
 
         public virtual IHttpActionResult GetEntity(int id)

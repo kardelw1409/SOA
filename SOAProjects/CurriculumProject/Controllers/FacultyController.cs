@@ -1,5 +1,7 @@
-﻿using CurriculumProject.Interfaces;
+﻿using CurriculumProject.Context;
+using CurriculumProject.Interfaces;
 using CurriculumProject.Models;
+using CurriculumProject.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,9 @@ namespace CurriculumProject.Controllers
 {
     public class FacultyController : RestController<Faculty>
     {
-        public FacultyController(IUnitOfWork<Faculty> unitOfWork) : base(unitOfWork)
+        public FacultyController(IRepository<Faculty> rep) : base(rep)
         {
+
         }
 
         [ResponseType(typeof(Faculty))]
@@ -39,7 +42,7 @@ namespace CurriculumProject.Controllers
             return base.PostEntity(entity);
         }
 
-        [ResponseType(typeof(Faculty))]
+        [ResponseType(typeof(void))]
         public override IHttpActionResult PutEntity(int id, Faculty model)
         {
             return base.PutEntity(id, model);

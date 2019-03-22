@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CurriculumProject.Interfaces
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<T> : IDisposable
+        where T : Entity
     {
         IEnumerable<T> GetAll();
         T Get(int id);
