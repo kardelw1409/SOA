@@ -9,40 +9,45 @@ using System.Web.Http.Description;
 
 namespace CurriculumProject.Controllers
 {
-    public class DepartmentController : RestController<Department>
+    public class SubjectController : CrudRestController<Subject>
     {
-        public DepartmentController(IRepository<Department> repository) : base(repository)
+        public SubjectController(IRepository<Subject> repository) : base(repository)
         {
 
         }
-        [ResponseType(typeof(Department))]
-        public override IHttpActionResult DeleteEntity(Department entity)
+
+        [ResponseType(typeof(Subject))]
+        public override IHttpActionResult DeleteEntity(Subject entity)
         {
             return base.DeleteEntity(entity);
         }
 
-
-        public override IQueryable<Department> GetEntities()
+        public override IQueryable<Subject> GetEntities()
         {
             return base.GetEntities();
         }
 
-        [ResponseType(typeof(Department))]
+        [ResponseType(typeof(Subject))]
         public override IHttpActionResult GetEntity(int id)
         {
             return base.GetEntity(id);
         }
 
-        [ResponseType(typeof(Department))]
-        public override IHttpActionResult PostEntity(Department entity)
+        [ResponseType(typeof(Subject))]
+        public override IHttpActionResult PostEntity(Subject entity)
         {
             return base.PostEntity(entity);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult PutEntity(int id, Department model)
+        public override IHttpActionResult PutEntity(int id, Subject model)
         {
             return base.PutEntity(id, model);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
         }
     }
 }

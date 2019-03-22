@@ -9,7 +9,7 @@ using System.Web.Http.Description;
 
 namespace CurriculumProject.Controllers
 {
-    public class SpecialityController : RestController<Speciality>
+    public class SpecialityController : CrudRestController<Speciality>
     {
         public SpecialityController(IRepository<Speciality> repository) : base(repository)
         {
@@ -43,6 +43,11 @@ namespace CurriculumProject.Controllers
         public override IHttpActionResult PutEntity(int id, Speciality model)
         {
             return base.PutEntity(id, model);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
         }
     }
 }

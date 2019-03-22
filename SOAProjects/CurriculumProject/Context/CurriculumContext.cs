@@ -11,12 +11,13 @@ namespace CurriculumProject.Context
     {
         public CurriculumContext(string connectionString) : base(connectionString)
         {
-
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
 
         static CurriculumContext()
         {
-            Database.SetInitializer<CurriculumContext>(new StoreDbInitializer());
+            Database.SetInitializer(new StoreDbInitializer());
         }
 
         public DbSet<Department> Departments { get; set; }  

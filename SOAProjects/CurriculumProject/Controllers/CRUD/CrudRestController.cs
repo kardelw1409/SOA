@@ -9,12 +9,12 @@ using System.Web.Http.Description;
 
 namespace CurriculumProject.Controllers
 {
-    public abstract class RestController<TEntity> : ApiController, IRestController<TEntity>
+    public abstract class CrudRestController<TEntity> : ApiController, IRestController<TEntity>
         where TEntity : Entity
     {
         protected readonly IRepository<TEntity> repository;
 
-        public RestController(IRepository<TEntity> rep)
+        public CrudRestController(IRepository<TEntity> rep)
         {
             repository = rep ?? throw new ArgumentNullException(nameof(rep));
         }
@@ -88,5 +88,18 @@ namespace CurriculumProject.Controllers
         {
             return repository.Find(e => e.Id == id).Count() > 0;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (disposing)
+            {
+                if (repository != null)
+                {
+                    repository.Dispose();
+                }
+            }
+        }
+
     }
 }

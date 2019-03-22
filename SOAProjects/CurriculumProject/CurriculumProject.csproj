@@ -137,12 +137,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Context\CurriculumContext.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
-    <Compile Include="Controllers\FacultyController.cs" />
-    <Compile Include="Controllers\RestController.cs" />
+    <Compile Include="Controllers\CRUD\DepartmentController.cs" />
+    <Compile Include="Controllers\CRUD\FacultyController.cs" />
+    <Compile Include="Controllers\CRUD\CrudRestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SpecialityController.cs" />
-    <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\CRUD\SpecialityController.cs" />
+    <Compile Include="Controllers\CRUD\SubjectController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
