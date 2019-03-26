@@ -11,7 +11,7 @@ namespace CurriculumProject.Controllers
 {
     public class SpecialityController : CrudRestController<Speciality>
     {
-        public SpecialityController(IRepository<Speciality> repository) : base(repository)
+        public SpecialityController(IEntityCrudService<Speciality> service) : base(service)
         {
 
         }

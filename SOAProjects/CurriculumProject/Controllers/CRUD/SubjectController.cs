@@ -11,7 +11,7 @@ namespace CurriculumProject.Controllers
 {
     public class SubjectController : CrudRestController<Subject>
     {
-        public SubjectController(IRepository<Subject> repository) : base(repository)
+        public SubjectController(IEntityCrudService<Subject> service) : base(service)
         {
 
         }

@@ -1,6 +1,7 @@
 ﻿using CurriculumProject.Interfaces;
 using CurriculumProject.Models;
 using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -12,16 +13,16 @@ namespace CurriculumProject.Controllers
     public abstract class CrudRestController<TEntity> : ApiController, IRestController<TEntity>
         where TEntity : Entity
     {
-        protected readonly IRepository<TEntity> repository;
+        protected IEntityCrudService<TEntity> service;
 
-        public CrudRestController(IRepository<TEntity> rep)
+        public CrudRestController(IEntityCrudService<TEntity> service)
         {
-            repository = rep ?? throw new ArgumentNullException(nameof(rep));
+            this.service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
         public virtual IHttpActionResult GetEntity(int id)
         {
-            TEntity entity = repository.Get(id);
+            TEntity entity = service.FindById(id);
             if (entity == null)
             {
                 return NotFound();
@@ -32,7 +33,7 @@ namespace CurriculumProject.Controllers
 
         public virtual IQueryable<TEntity> GetEntities()
         {
-            return repository.GetAll().AsQueryable();
+            return service.GetAll().AsQueryable();
         }
 
         public virtual IHttpActionResult PostEntity(TEntity entity)
@@ -42,7 +43,7 @@ namespace CurriculumProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            repository.Create(entity);
+            service.Create(entity);
 
             return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
         }
@@ -61,7 +62,7 @@ namespace CurriculumProject.Controllers
 
             try
             {
-                repository.Update(model);
+                service.Update(model);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,24 +81,18 @@ namespace CurriculumProject.Controllers
 
         public virtual IHttpActionResult DeleteEntity(TEntity entity)
         {
-            repository.Delete(entity);
+            service.Remove(entity);
             return Ok(entity);
         }
 
         private bool EntityExists(int id)
         {
-            return repository.Find(e => e.Id == id).Count() > 0;
+            return service.FindById(id) != null;
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                if (repository != null)
-                {
-                    repository.Dispose();
-                }
-            }
+            service.Dispose();
             base.Dispose(disposing);
         }
 

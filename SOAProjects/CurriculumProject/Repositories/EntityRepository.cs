@@ -12,24 +12,22 @@ namespace CurriculumProject.Repositories
         where TEntity : Entity
     {
         private DbContext dbContext;
-        private DbSet<TEntity> dbSet;
 
         public EntityRepository(DbContext dbContext)
         {
             this.dbContext = dbContext;
-            dbSet = dbContext.Set<TEntity>();
         }
 
         public void Create(TEntity entity)
         {
-            dbSet.Add(entity);
-            dbContext.SaveChanges();
+            dbContext.Set<TEntity>().Add(entity);
+            dbContext.SaveChanges();    
         }
 
 
         public void Delete(TEntity entity)
         {
-            dbSet.Remove(entity);
+            dbContext.Set<TEntity>().Remove(entity);
             dbContext.SaveChanges();
         }
 
@@ -53,17 +51,17 @@ namespace CurriculumProject.Repositories
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
-            return dbSet.Where(predicate);
+            return dbContext.Set<TEntity>().Where(predicate);
         }
 
         public TEntity Get(int id)
         {
-            return dbSet.Find(id);
+            return dbContext.Set<TEntity>().Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return dbSet;
+            return dbContext.Set<TEntity>();
 
         }
 

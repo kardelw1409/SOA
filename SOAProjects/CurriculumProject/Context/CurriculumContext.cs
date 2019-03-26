@@ -17,7 +17,7 @@ namespace CurriculumProject.Context
 
         static CurriculumContext()
         {
-            Database.SetInitializer(new StoreDbInitializer());
+            //Database.SetInitializer(new StoreDbInitializer());
         }
 
         public DbSet<Department> Departments { get; set; }  

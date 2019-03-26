@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CurriculumProject.Interfaces
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<Faculty> Faculties { get; }
         IRepository<Department> Departments { get; }

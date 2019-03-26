@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CurriculumProject.Repositories
 {
-    public class EFUnitOfWork : IUnitOfWork
+    public class EntityCrudService : IUnitOfWork
     {
         private DbContext db;
         private IRepository<Faculty> facultyRep;
@@ -16,31 +16,83 @@ namespace CurriculumProject.Repositories
         private IRepository<Speciality> specialityRep;
         private IRepository<Subject> subjectRep;
 
+        public EntityCrudService(DbContext context)
+        {
+            db = context;
+        }
+
         public IRepository<Faculty> Faculties
         {
             get
             {
                 if (facultyRep == null)
                 {
-                    facultyRep = new 
+                    facultyRep = new EntityRepository<Faculty>(db);
                 }
+                return facultyRep;
             }
         }
 
-        public IRepository<Department> Departments => throw new NotImplementedException();
-
-        public IRepository<Speciality> Specialties => throw new NotImplementedException();
-
-        public IRepository<Subject> Subjects => throw new NotImplementedException();
-
-        public void Dispose()
+        public IRepository<Department> Departments
         {
-            throw new NotImplementedException();
+            get
+            {
+                if (departmentRep == null)
+                {
+                    departmentRep = new EntityRepository<Department>(db);
+                }
+                return departmentRep;
+            }
+        }
+
+        public IRepository<Speciality> Specialties
+        {
+            get
+            {
+                if (specialityRep == null)
+                {
+                    specialityRep = new EntityRepository<Speciality>(db);
+                }
+                return specialityRep;
+            }
+        }
+
+        public IRepository<Subject> Subjects
+        {
+            get
+            {
+                if (subjectRep == null)
+                {
+                    subjectRep = new EntityRepository<Subject>(db);
+                }
+                return subjectRep;
+            }
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
+
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
     }
 }
