@@ -17,7 +17,7 @@ namespace CurriculumProject.Context
 
         static CurriculumContext()
         {
-            //Database.SetInitializer(new StoreDbInitializer());
+            Database.SetInitializer(new StoreDbInitializer());
         }
 
         public DbSet<Department> Departments { get; set; }  
@@ -26,19 +26,19 @@ namespace CurriculumProject.Context
         public DbSet<Subject> Subjects { get; set; }
     }
 
-    public class StoreDbInitializer : DropCreateDatabaseIfModelChanges<CurriculumContext>
+    public class StoreDbInitializer : DropCreateDatabaseAlways<CurriculumContext>
     {
         protected override void Seed(CurriculumContext db)
         {
             db.Faculties.Add(new Faculty { Name = "FMaIT" });
             db.Faculties.Add(new Faculty { Name = "BF" });
             db.Faculties.Add(new Faculty { Name = "IF" });
-            db.Specialities.Add(new Speciality { FacultyId = 1, Name = "POIT", Plan = 24 });
-            db.Specialities.Add(new Speciality { FacultyId = 1, Name = "POKS", Plan = 22 });
-            db.Departments.Add(new Department { FacultyId = 1, Name = "CPaSP"});
-            db.Departments.Add(new Department { FacultyId = 1, Name = "CIaIT" });
-            db.Subjects.Add(new Subject { DepartmentId = 1, Name = "Math", IsCredit = true, IsExam = true });
-            db.Subjects.Add(new Subject { DepartmentId = 2, Name = "Programming Language", IsCredit = true, IsExam = true });
+            db.Specialities.Add(new Speciality { Name = "POIT", Plan = 24, FacultyId = 1 });
+            db.Specialities.Add(new Speciality { Name = "POKS", Plan = 22, FacultyId = 1});
+            //db.Departments.Add(new Department { Name = "CPaSP", FacultyId = 1});
+            //db.Departments.Add(new Department { Name = "CIaIT", FacultyId = 1});
+            //db.Subjects.Add(new Subject {  Name = "Math",  IsExam = true , IsCredit = true, DepartmentId = 1});
+            //db.Subjects.Add(new Subject {  Name = "Programming Language", IsExam = true,  IsCredit = true, DepartmentId = 2});
             db.SaveChanges();
         }
     }
