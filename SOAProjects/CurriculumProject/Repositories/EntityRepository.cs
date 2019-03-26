@@ -33,7 +33,7 @@ namespace CurriculumProject.Repositories
             dbContext.SaveChanges();
         }
 
-        protected void Dispose(bool disposing)
+        /*protected void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -49,7 +49,7 @@ namespace CurriculumProject.Repositories
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
+        }*/
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
