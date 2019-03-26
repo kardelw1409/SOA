@@ -35,10 +35,18 @@ namespace CurriculumProject.App_Start
             //Register your Web API controllers.  
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
+
+            builder.RegisterType<CurriculumContext>()
+                   .As<DbContext>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<DbFactory>()
+                 .As<IDbFactory>()
+                 .InstancePerRequest();
+
             builder.RegisterGeneric(typeof(EntityCrudService<>))
                    .As(typeof(IEntityCrudService<>))
-                   .WithParameter("dbContext", new CurriculumContext("CurriculumConnection"))
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
 
             //Set the dependency resolver to be Autofac.  
             Container = builder.Build();

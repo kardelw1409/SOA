@@ -13,7 +13,7 @@ namespace CurriculumProject.Controllers
     public abstract class CrudRestController<TEntity> : ApiController, IRestController<TEntity>
         where TEntity : Entity
     {
-        protected IEntityCrudService<TEntity> service;
+        protected readonly IEntityCrudService<TEntity> service;
 
         public CrudRestController(IEntityCrudService<TEntity> service)
         {
