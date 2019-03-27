@@ -5,19 +5,20 @@ using System.Web;
 
 namespace CurriculumProject.Models
 {
-    public class Subject
+    public class Subject : Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public bool IsExam { get; set; }
         public bool IsCredit { get; set; }
 
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
+        //TO DO
         //public virtual ICollection<Performance> Performances { get; set; }
         
         public Subject()
         {
+            //TO DO
             //Performances = new List<Performance>();
         }
 

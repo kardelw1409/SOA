@@ -10,7 +10,9 @@ namespace CurriculumProject
         public static void Register(HttpConfiguration config)
         {
             // Конфигурация и службы веб-API
-
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 
