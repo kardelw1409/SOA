@@ -17,7 +17,7 @@ namespace CurriculumProject.Controllers
 
         public CrudRestController(IEntityCrudService<TEntity> service)
         {
-            this.service = service ?? throw new ArgumentNullException(nameof(service));
+            this.service = service;
         }
 
         public virtual IHttpActionResult GetEntity(int id)
