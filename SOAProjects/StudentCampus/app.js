@@ -1,6 +1,6 @@
-﻿const express = require('express');
+﻿//
+const express = require('express');
 const bodyParser = require('body-parser');
-
 // create express app
 const app = express();
 
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
 });
 
-require('./app/routes/campus.js')(app);
+require('./routes/campus.js')(app);
 
 // listen for requests
 app.listen(3000, () => {

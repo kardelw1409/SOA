@@ -2,7 +2,8 @@
 var Schema = mongoose.Schema;
 
 var CampusSchema = new Schema({
-    adress: String
+    number: { type: Number, required: true },
+    adress: { type: String, required: true }
 });
 
 

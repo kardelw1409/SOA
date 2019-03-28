@@ -3,15 +3,20 @@
 // Create and Save a new Note
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.content) {
+    if (!req.body.number) {
         return res.status(400).send({
             message: "Campus content can not be empty"
         });
     }
-
+    if (!req.body.adress) {
+        return res.status(400).send({
+            message: "Campus content can not be empty"
+        });
+    }
     // Create a Note
     const campus = new Campus({
-        adress: req.body.adress || "Untitled campus"
+        number: req.body.number,
+        adress: req.body.adress
     });
 
     // Save Note in the database
@@ -39,22 +44,22 @@ exports.findAll = (req, res) => {
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
-    Campus.findById(req.params.noteId)
+    Campus.findById(req.params.campusId)
         .then(campus => {
             if (!campus) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.campusId
                 });
             }
             res.send(campus);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.campusId
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving note with id " + req.params.noteId
+                message: "Error retrieving note with id " + req.params.campusId
             });
         });
 };
@@ -62,31 +67,36 @@ exports.findOne = (req, res) => {
 // Update a note identified by the noteId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.content) {
+    if (!req.body.number) {
         return res.status(400).send({
             message: "Note content can not be empty"
         });
     }
-
+    if (!req.body.adress) {
+        return res.status(400).send({
+            message: "Note content can not be empty"
+        });
+    }
     // Find note and update it with the request body
-    Campus.findByIdAndUpdate(req.params.noteId, {
-        adress: req.body.adress || "Untitled Note"
+    Campus.findByIdAndUpdate(req.params.campusId, {
+        number: req.body.number,
+        adress: req.body.adress
     }, { new: true })
         .then(campus => {
             if (!campus) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.campusId
                 });
             }
             res.send(campus);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.campusId
                 });
             }
             return res.status(500).send({
-                message: "Error updating note with id " + req.params.noteId
+                message: "Error updating note with id " + req.params.campusId
             });
         });
 };
@@ -97,7 +107,7 @@ exports.delete = (req, res) => {
         .then(campus => {
             if (!campus) {
                 return res.status(404).send({
-                    message: "Note not found with id " + req.params.noteId
+                    message: "Note not found with id " + req.params.campusId
                 });
             }
             res.send({ message: "Note deleted successfully!" });
