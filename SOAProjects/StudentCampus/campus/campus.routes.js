@@ -1,6 +1,6 @@
 ﻿module.exports = (app) => {
-    const campuses = require('../controllers/campus.js');
-
+    const campuses = require('..//campus//campus.controller');//
+                               
     // Create a new Note
     app.post('/campuses', campuses.create);
 

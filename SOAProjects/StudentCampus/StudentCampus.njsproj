@@ -34,16 +34,16 @@
     <Compile Include="config\database.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="controllers\campus.js">
+    <Compile Include="campus\campus.controller.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\campus.js">
+    <Compile Include="campus\campus.model.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\room.js">
+    <Compile Include="models\room.model.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="routes\campus.js">
+    <Compile Include="campus\campus.routes.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes\index.js" />
@@ -59,6 +59,7 @@
     <Folder Include="models\" />
     <Folder Include="controllers\" />
     <Folder Include="config\" />
+    <Folder Include="campus\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
