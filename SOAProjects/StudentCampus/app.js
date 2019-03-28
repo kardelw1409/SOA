@@ -1,27 +1,39 @@
-﻿
-var express = require('express');
-var bodyParser = require('body-parser');
+﻿const express = require('express');
+const bodyParser = require('body-parser');
 
-var campus = require('./routes/campus'); // Imports routes for the products
-var app = express();
+// create express app
+const app = express();
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
 
-// Set up mongoose connection
+// parse application/json
+app.use(bodyParser.json())
+
+// Configuring the database
+const dbConfig = require('./config/database.js');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/CampusDb', { useNewUrlParser: true });
-/*var dev_db_url = 'mongodb://someuser:abcd1234@ds123619.mlab.com:23619/productstutorial';
-var mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB);*/
+
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/campuses', campus);
+// Connecting to the database
+mongoose.connect(dbConfig.url, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
 
-var port = 1234;
+// define a simple route
+app.get('/', (req, res) => {
+    res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
+});
 
-app.listen(port, () => {
-    console.log('Server is up and running on port numner ' + port);
+require('./app/routes/campus.js')(app);
+
+// listen for requests
+app.listen(3000, () => {
+    console.log("Server is listening on port 3000");
 });

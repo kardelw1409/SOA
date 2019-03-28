@@ -31,6 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="config\database.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="controllers\campus.js">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,7 @@
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="controllers\" />
+    <Folder Include="config\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

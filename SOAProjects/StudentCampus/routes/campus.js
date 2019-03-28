@@ -1,19 +1,18 @@
-﻿var express = require('express');
-var router = express.Router();
+﻿module.exports = (app) => {
+    const campuses = require('../controllers/campus.js');
 
-var campus_controller = require('../controllers/campus');
+    // Create a new Note
+    app.post('/campuses', campuses.create);
 
+    // Retrieve all Notes
+    app.get('/campuses', campuses.findAll);
 
-router.get('/test', campus_controller.test);
+    // Retrieve a single Note with noteId
+    app.get('/campuses/:campusId', campuses.findOne);
 
+    // Update a Note with noteId
+    app.put('/campuses/:campusId', campuses.update);
 
-router.post('/create', campus_controller.campus_create);
-
-router.get('/:id', campus_controller.campus_details);
-
-router.put('/:id/update', campus_controller.campus_update);
-
-router.delete('/:id/delete', campus_controller.campus_delete);
-
-
-module.exports = router;
+    // Delete a Note with noteId
+    app.delete('/campuses/:campusId', campuses.delete);
+}
