@@ -1,7 +1,8 @@
-﻿const Campus = require('../campus/campus.model');
-
+﻿//require('module-alias/register');
+const Campus = require('./campus_model');
+//import Campus from "./campus.model";
 // Create and Save a new Campus
-exports.create = (req, res) => {
+module.exports.create = (req, res) => {
     // Validate request
     if (!req.body.number) {
         return res.status(400).send({
@@ -31,7 +32,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve and return all campuses from the database.
-exports.findAll = (req, res) => {
+module.exports.findAll = (req, res) => {
     Campus.find()
         .then(campuses => {
             res.send(campuses);
@@ -43,7 +44,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single campus with a campusId
-exports.findOne = (req, res) => {
+module.exports.findOne = (req, res) => {
     Campus.findById(req.params.campusId)
         .then(campus => {
             if (!campus) {
@@ -65,7 +66,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a note identified by the noteId in the request
-exports.update = (req, res) => {
+module.exports.update = (req, res) => {
     // Validate Request
     if (!req.body.number) {
         return res.status(400).send({
@@ -102,7 +103,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a campus with the specified campusId in the request
-exports.delete = (req, res) => {
+module.exports.delete = (req, res) => {
     Campus.findByIdAndRemove(req.params.campusId)
         .then(campus => {
             if (!campus) {

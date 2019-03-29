@@ -1,7 +1,9 @@
-﻿const Room = require('./room/room.model');
-const campuses = require('./campus/campus.controller');
+﻿const Room = require("./room_model");
+const Campus = require('../campus/campus_model');
+//import Room from './room_model';
+//require('module-alias/register');
 
-exports.create = (req, res) => {
+module.exports.create = (req, res) => {
     // Validate request
     if (!req.body.number) {
         return res.status(400).send({
@@ -23,8 +25,8 @@ exports.create = (req, res) => {
     const room = new Room({
         number: req.body.number,
         place_count: req.body.place_count,
-        _campus_id: req.body._campus_id,
-        campuses: Campus.findById(req.params._campus_id)
+        _campus_id: req.body._campus_id
+        //campuses: Campus.findById(req.params._campus_id)
     });
 
     // Save Room in the database
@@ -39,7 +41,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve and return all rooms from the database.
-exports.findAll = (req, res) => {
+module.exports.findAll = (req, res) => {
     Room.find()
         .then(rooms => {
             res.send(rooms);
@@ -51,7 +53,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single room with a roomId
-exports.findOne = (req, res) => {
+module.exports.findOne = (req, res) => {
     Room.findById(req.params.roomId)
         .then(room => {
             if (!room) {
@@ -73,7 +75,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a room identified by the roomId in the request
-exports.update = (req, res) => {
+module.exports.update = (req, res) => {
     // Validate Request
     if (!req.body.number) {
         return res.status(400).send({
@@ -88,9 +90,9 @@ exports.update = (req, res) => {
     // Find note and update it with the request body
     Room.findByIdAndUpdate(req.params.roomId, {
         number: req.body.number,
-        place_count: req.body.adress,
-        _campus_id: req.body._campus_id,
-        campuses: Campus.findById(req.params._campus_id)
+        place_count: req.body.place_count,
+        _campus_id: req.body._campus_id
+        //campuses: Campus.findById(req.params._campus_id)
     }, { new: true })
         .then(room => {
             if (!room) {
@@ -112,7 +114,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a room with the specified roomId in the request
-exports.delete = (req, res) => {
+module.exports.delete = (req, res) => {
     Room.findByIdAndRemove(req.params.roomId)
         .then(room => {
             if (!room) {

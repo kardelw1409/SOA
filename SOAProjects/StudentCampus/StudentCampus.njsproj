@@ -31,25 +31,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="room\room.controller.js">
+    <Compile Include="room\room_controller.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="config\database.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="campus\campus.controller.js">
+    <Compile Include="campus\campus_controller.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="campus\campus.model.js">
+    <Compile Include="campus\campus_model.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="room\room.model.js">
+    <Compile Include="room\room_model.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="campus\campus.routes.js">
+    <Compile Include="campus\campus_routes.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="room\room.routes.js">
+    <Compile Include="room\room_routes.js">
       <SubType>Code</SubType>
     </Compile>
     <Content Include="package.json" />

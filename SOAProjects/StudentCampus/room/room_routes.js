@@ -1,6 +1,7 @@
 ﻿module.exports = (app) => {
-    const rooms = require('./../room/room.controller');//
-
+    //require('module-alias/register');
+    const rooms = require('./room_controller');//
+    //import rooms from './room_controller';
     // Create a new Room
     app.post('/Room', rooms.create);
 
@@ -14,5 +15,5 @@
     app.put('/Room/:roomId', rooms.update);
 
     // Delete a Room with roomId
-    app.delete('/Room/:roomsId', rooms.delete);
+    app.delete('/Room/:roomId', rooms.delete);
 }

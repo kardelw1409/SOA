@@ -1,5 +1,6 @@
 ﻿module.exports = (app) => {
-    const campuses = require('../campus/campus.controller');//
+    //require('module-alias/register');
+    const campuses = require('./campus_controller');//
                                
     // Create a new Campus
     app.post('/Campus', campuses.create);

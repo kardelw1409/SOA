@@ -11,7 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // Configuring the database
-const dbConfig = require('./config/database');
+//require('module-alias/register')
+const dbConfig = require('./config/database.js');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -30,10 +31,11 @@ mongoose.connect(dbConfig.url, {
 app.get('/', (req, res) => {
     res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
 });
-
-require('./campus/campus.routes')(app);
-require('./room/room.routes')(app);
-
+//require('module-alias/register');
+require('./campus/campus_routes')(app);
+//require('module-alias/register');
+require('./room/room_routes')(app);
+//import * as routes from './room/room.routes.js';
 // listen for requests
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");

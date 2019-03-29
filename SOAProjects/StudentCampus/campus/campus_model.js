@@ -1,7 +1,7 @@
-﻿var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+﻿const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var CampusSchema = new Schema({
+const CampusSchema = new Schema({
     number: { type: Number, required: true },
     adress: { type: String, required: true }
 });
