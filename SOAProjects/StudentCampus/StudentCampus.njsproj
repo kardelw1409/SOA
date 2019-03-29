@@ -31,6 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="room\room.controller.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="config\database.js">
       <SubType>Code</SubType>
     </Compile>
@@ -40,32 +43,27 @@
     <Compile Include="campus\campus.model.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\room.model.js">
+    <Compile Include="room\room.model.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="campus\campus.routes.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="routes\index.js" />
-    <Compile Include="routes\users.js" />
+    <Compile Include="room\room.routes.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\index.pug" />
-    <Content Include="views\layout.pug" />
-    <Content Include="views\error.pug" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="models\" />
-    <Folder Include="controllers\" />
     <Folder Include="config\" />
     <Folder Include="campus\" />
+    <Folder Include="room\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
     <Folder Include="public\stylesheets\" />
-    <Folder Include="routes\" />
-    <Folder Include="views\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

@@ -1,18 +1,18 @@
 ﻿module.exports = (app) => {
-    const campuses = require('..//campus//campus.controller');//
+    const campuses = require('../campus/campus.controller');//
                                
-    // Create a new Note
-    app.post('/campuses', campuses.create);
+    // Create a new Campus
+    app.post('/Campus', campuses.create);
 
-    // Retrieve all Notes
-    app.get('/campuses', campuses.findAll);
+    // Retrieve all Campuses
+    app.get('/Campus', campuses.findAll);
 
-    // Retrieve a single Note with noteId
-    app.get('/campuses/:campusId', campuses.findOne);
+    // Retrieve a single Campus with campusId
+    app.get('/Campus/:campusId', campuses.findOne);
 
-    // Update a Note with noteId
-    app.put('/campuses/:campusId', campuses.update);
+    // Update a Campus with campusId
+    app.put('/Campus/:campusId', campuses.update);
 
-    // Delete a Note with noteId
-    app.delete('/campuses/:campusId', campuses.delete);
+    // Delete a Campus with campusId
+    app.delete('/Campus/:campusId', campuses.delete);
 }

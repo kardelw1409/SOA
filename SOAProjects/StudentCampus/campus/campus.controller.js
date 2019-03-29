@@ -1,6 +1,6 @@
-﻿const Campus = require('./campus/campus.model.js');
+﻿const Campus = require('../campus/campus.model');
 
-// Create and Save a new Note
+// Create and Save a new Campus
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.number) {
@@ -13,13 +13,13 @@ exports.create = (req, res) => {
             message: "Campus content can not be empty"
         });
     }
-    // Create a Note
+    // Create a Campus
     const campus = new Campus({
         number: req.body.number,
         adress: req.body.adress
     });
 
-    // Save Note in the database
+    // Save Campus in the database
     campus.save()
         .then(data => {
             res.send(data);
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve and return all notes from the database.
+// Retrieve and return all campuses from the database.
 exports.findAll = (req, res) => {
     Campus.find()
         .then(campuses => {
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single note with a noteId
+// Find a single campus with a campusId
 exports.findOne = (req, res) => {
     Campus.findById(req.params.campusId)
         .then(campus => {
@@ -77,7 +77,7 @@ exports.update = (req, res) => {
             message: "Campus content can not be empty"
         });
     }
-    // Find note and update it with the request body
+    // Find campus and update it with the request body
     Campus.findByIdAndUpdate(req.params.campusId, {
         number: req.body.number,
         adress: req.body.adress
@@ -96,12 +96,12 @@ exports.update = (req, res) => {
                 });
             }
             return res.status(500).send({
-                message: "Error updating note with id " + req.params.campusId
+                message: "Error updating campus with id " + req.params.campusId
             });
         });
 };
 
-// Delete a note with the specified noteId in the request
+// Delete a campus with the specified campusId in the request
 exports.delete = (req, res) => {
     Campus.findByIdAndRemove(req.params.campusId)
         .then(campus => {
@@ -118,7 +118,7 @@ exports.delete = (req, res) => {
                 });
             }
             return res.status(500).send({
-                message: "Could not delete note with id " + req.params.campusId
+                message: "Could not delete campus with id " + req.params.campusId
             });
         });
 };
