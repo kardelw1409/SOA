@@ -1,12 +1,10 @@
 ﻿using CurriculumProject.Interfaces;
 using CurriculumProject.Models;
 using System;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace CurriculumProject.Controllers
 {
@@ -17,7 +15,7 @@ namespace CurriculumProject.Controllers
 
         public CrudRestController(IEntityCrudService<TEntity> service)
         {
-            this.service = service ?? throw new ArgumentNullException(nameof(service));
+            this.service = service;
         }
 
         public virtual IHttpActionResult GetEntity(int id)
