@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2005
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumProject", "CurriculumProject\CurriculumProject.csproj", "{95258461-7916-4CFB-9414-02BFA3F088B2}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "CompanyService", "CompanyService\CompanyService.njsproj", "{9C44A183-7CEF-4BDC-8019-CDA1B4179D1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsProject", "StudentsProject\StudentsProject.csproj", "{E279D14D-7C46-48BC-91CD-3F63A22EC145}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9C44A183-7CEF-4BDC-8019-CDA1B4179D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C44A183-7CEF-4BDC-8019-CDA1B4179D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C44A183-7CEF-4BDC-8019-CDA1B4179D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E279D14D-7C46-48BC-91CD-3F63A22EC145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E279D14D-7C46-48BC-91CD-3F63A22EC145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E279D14D-7C46-48BC-91CD-3F63A22EC145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E279D14D-7C46-48BC-91CD-3F63A22EC145}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
