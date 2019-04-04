@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 const CampusSchema = require('../campus/campus_model');
 
 const RoomSchema = new Schema({
-    number: Number,
-    place_count: Number,
-    _campus_id: String
+    number: { type: Number, required: true },
+    place_count: { type: Number, required: true },
+    _campus_id: { type: Schema.Types.ObjectId, ref: 'Campus' }
 });
 
 
