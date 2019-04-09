@@ -3,84 +3,108 @@ const Entrant = require('./entrant_model');
 // Создание и сохранение нового абитуриента
 module.exports.create = (req, res) => {
     // Проверка
-    if (!req.body.number) {
+    if (!req.body.medal) {
         return res.status(400).send({
             message: "Entrant content can not be empty"
         });
     }
-    if (!req.body.adress) {
+    if (!req.body.total_score) {
         return res.status(400).send({
             message: "Entrant content can not be empty"
         });
     }
-    // Create a Campus
+    if (!req.body.is_entranted) {
+        return res.status(400).send({
+            message: "Entrant content can not be empty"
+        });
+    }
+    if (!req.body.entrant_year) {
+        return res.status(400).send({
+            message: "Entrant content can not be empty"
+        });
+    }
+    // Создание абитуриента
     const entrant = new Entrant({
-        number: req.body.number,
-        adress: req.body.adress
+        medal: req.body.medal,
+        total_score: req.body.total_score,
+        is_entranted: req.body.is_entranted,
+        entrant_year: req.body.entrant_year
     });
 
-    // Save Campus in the database
+    // Сохранение абитуриенат а бд
     entrant.save()
         .then(data => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Campus."
+                message: err.message || "Ошибка создания"
             });
         });
 };
 
-// Retrieve and return all campuses from the database.
+// Нахождение всех абитуриентов и вывод
 module.exports.findAll = (req, res) => {
     Entrant.find()
         .then(entrantes => {
             res.send(entrantes);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving campuses."
+                message: err.message || "Ошибка"
             });
         });
 };
 
-// Find a single campus with a campusId
+// Нахожддение одного абитуриента по ID
 module.exports.findOne = (req, res) => {
     Entrant.findById(req.params.entrantId)
         .then(entrant => {
             if (!entrant) {
                 return res.status(404).send({
-                    message: "Entrant not found with id " + req.params.entrantId
+                    message: "Нет ID c номером" + req.params.entrantId
                 });
             }
             res.send(entrant);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Entrant not found with id " + req.params.entrantId
+                    message: "Нет ID c номером " + req.params.entrantId
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving campus with id " + req.params.entrantId
+                message: "Ошибка с ID" + req.params.entrantId
             });
         });
 };
 
 // Update a note identified by the noteId in the request
 module.exports.update = (req, res) => {
-    // Validate Request
-    if (!req.body.number) {
+    // Проверка
+    if (!req.body.medal) {
         return res.status(400).send({
-            message: "Entrant content can not be empty"
+            message: "Error"
         });
     }
-    if (!req.body.adress) {
+    if (!req.body.total_score) {
         return res.status(400).send({
-            message: "Entrant content can not be empty"
+            message: "Error"
         });
     }
-    // Find campus and update it with the request body
+    if (!req.body.is_entranted) {
+        return res.status(400).send({
+            message: "Error"
+        });
+    }
+    if (!req.body.entrant_year) {
+        return res.status(400).send({
+            message: "Error"
+        });
+    }
+    // Нахождение и обновление абитуриента посредством тела запроса
     Entrant.findByIdAndUpdate(req.params.entrantId, {
-        number: req.body.number,
-        adress: req.body.adress
+        medal: req.body.medal,
+        total_score: req.body.total_score,
+        is_entranted: req.body.is_entranted,
+        entrant_year: req.body.entrant_year
     }, { new: true })
         .then(entrant => {
             if (!entrant) {
@@ -101,7 +125,7 @@ module.exports.update = (req, res) => {
         });
 };
 
-// Delete a campus with the specified campusId in the request
+// Удаление Абитуриента по ID запроса
 module.exports.delete = (req, res) => {
     Entrant.findByIdAndRemove(req.params.entrantId)
         .then(entrant => {

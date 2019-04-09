@@ -1,19 +1,18 @@
 module.exports = (app) => {
-    //require('module-alias/register');
-    const campuses = require('./entrant_controller');//
+    const entrantes = require('./entrant_controller');//
 
-    // Create a new Campus
+    // Создание Абитуриента
     app.post('/Entrant', entrantes.create);
 
-    // Retrieve all Campuses
+    // Найти всех абитуриентов
     app.get('/Entrant', entrantes.findAll);
 
-    // Retrieve a single Campus with campusId
+    // Найти абитуриента по ID
     app.get('/Entrant/:entrantId', entrantes.findOne);
 
-    // Update a Campus with campusId
+    // Обновление
     app.put('/Entrant/:entrantId', entrantes.update);
 
-    // Delete a Campus with campusId
+    // Удаление
     app.delete('/Entrant/:entrantId', entrantes.delete);
 }

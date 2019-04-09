@@ -3,122 +3,146 @@ const Profile = require('./profile_model');
 // Создание и сохранение Profile
 module.exports.create = (req, res) => {
     // Проверка
-    if (!req.body.number) {
+    if (!req.body.first_name) {
         return res.status(400).send({
             message: "Entrant content can not be empty"
         });
     }
-    if (!req.body.adress) {
+    if (!req.body.last_name) {
         return res.status(400).send({
             message: "Entrant content can not be empty"
         });
     }
-    // Create a Campus
-    const entrant = new Profile({
-        number: req.body.number,
-        adress: req.body.adress
+    if (!req.body.patronymic) {
+        return res.status(400).send({
+            message: "Entrant content can not be empty"
+        });
+    }
+    if (!req.body.birthday) {
+        return res.status(400).send({
+            message: "Entrant content can not be empty"
+        });
+    }
+    // Создание profile
+    const profile = new Profile({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        patronymic: req.body.patronymic,
+        birthday: req.body.birthday
     });
 
-    // Save Campus in the database
+    // Сохранение в бд
     profile.save()
         .then(data => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Campus."
+                message: err.message || "Some error occurred while creating the Profile."
             });
         });
 };
 
-// Retrieve and return all campuses from the database.
+// Нахождение и занесение в бд
 module.exports.findAll = (req, res) => {
     Profile.find()
         .then(profiles => {
             res.send(profiles);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving campuses."
+                message: err.message || "Some error occurred while retrieving profiles."
             });
         });
 };
 
-// Find a single campus with a campusId
+// Нахождение одного по ID 
 module.exports.findOne = (req, res) => {
     Profile.findById(req.params.profileId)
         .then(profile => {
             if (!profile) {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
             res.send(profile);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving campus with id " + req.params.profileId
+                message: "Error retrieving profile with id " + req.params.profileId
             });
         });
 };
 
 // Update a note identified by the noteId in the request
 module.exports.update = (req, res) => {
-    // Validate Request
-    if (!req.body.number) {
+    // Проверка
+    if (!req.body.first_name) {
         return res.status(400).send({
-            message: "Campus content can not be empty"
+            message: "Profile content can not be empty"
         });
     }
-    if (!req.body.adress) {
+    if (!req.body.last_name) {
         return res.status(400).send({
-            message: "Campus content can not be empty"
+            message: "Profile content can not be empty"
         });
     }
-    // Find campus and update it with the request body
+    if (!req.body.patronymic) {
+        return res.status(400).send({
+            message: "Profile content can not be empty"
+        });
+    }
+    if (!req.body.birthday) {
+        return res.status(400).send({
+            message: "Profile content can not be empty"
+        });
+    }
+    // Find profile and update it with the request body
     Profile.findByIdAndUpdate(req.params.profileId, {
-        number: req.body.number,
-        adress: req.body.adress
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        patronymic: req.body.patronymic,
+        birthday: req.body.birthday
     }, { new: true })
         .then(profile => {
             if (!profile) {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
             res.send(profile);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
             return res.status(500).send({
-                message: "Error updating campus with id " + req.params.profileId
+                message: "Error updating profile with id " + req.params.profileId
             });
         });
 };
 
-// Delete a campus with the specified campusId in the request
+// Delete a profile with the specified profileId in the request
 module.exports.delete = (req, res) => {
     Profile.findByIdAndRemove(req.params.profileId)
         .then(profile => {
             if (!profile) {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
-            res.send({ message: "Campus deleted successfully!" });
+            res.send({ message: "Profile deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
                 return res.status(404).send({
-                    message: "Campus not found with id " + req.params.profileId
+                    message: "Profile not found with id " + req.params.profileId
                 });
             }
             return res.status(500).send({
-                message: "Could not delete campus with id " + req.params.profileId
+                message: "Could not delete profile with id " + req.params.profileId
             });
         });
 };

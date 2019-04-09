@@ -2,18 +2,18 @@ module.exports = (app) => {
     //require('module-alias/register');
     const profiles = require('./profile_controller');//
 
-    // Create a new Campus
+    // Create a new Profile
     app.post('/Profile', profiles.create);
 
-    // Retrieve all Campuses
+    // Retrieve all Profiles
     app.get('/Profile', profiles.findAll);
 
-    // Retrieve a single Campus with campusId
+    // Retrieve a single Profile with profileId
     app.get('/Profile/:profilesId', profiles.findOne);
 
-    // Update a Campus with campusId
+    // Update a Profile with profileId
     app.put('/Profile/:profilesId', profiles.update);
 
-    // Delete a Campus with campusId
+    // Delete a Profile with profileId
     app.delete('/Profile/:profilesId', profiles.delete);
 }
