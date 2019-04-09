@@ -1,9 +1,8 @@
-//require('module-alias/register');
 const Profile = require('./profile_model');
-//import Campus from "./campus.model";
-// Create and Save a new Campus
+//import
+// Создание и сохранение Profile
 module.exports.create = (req, res) => {
-    // Validate request
+    // Проверка
     if (!req.body.number) {
         return res.status(400).send({
             message: "Entrant content can not be empty"

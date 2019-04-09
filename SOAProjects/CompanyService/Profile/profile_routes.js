@@ -1,19 +1,19 @@
 module.exports = (app) => {
     //require('module-alias/register');
-    const campuses = require('./profele_controller');//
+    const profiles = require('./profile_controller');//
 
     // Create a new Campus
-    app.post('/Profile', campuses.create);
+    app.post('/Profile', profiles.create);
 
     // Retrieve all Campuses
-    app.get('/Profile', campuses.findAll);
+    app.get('/Profile', profiles.findAll);
 
     // Retrieve a single Campus with campusId
-    app.get('/Profile/:profilesId', campuses.findOne);
+    app.get('/Profile/:profilesId', profiles.findOne);
 
     // Update a Campus with campusId
-    app.put('/Profile/:profilesId', campuses.update);
+    app.put('/Profile/:profilesId', profiles.update);
 
     // Delete a Campus with campusId
-    app.delete('/Profile/:profilesId', campuses.delete);
+    app.delete('/Profile/:profilesId', profiles.delete);
 }

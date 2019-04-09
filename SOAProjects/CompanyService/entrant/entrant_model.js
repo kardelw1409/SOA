@@ -8,7 +8,7 @@ const EntrantSchema = new Schema({
     total_score: { type: Number, required: true },
     is_entranted: { type: Boolean, required: true },
     entrant_year: { type: Number, required: true },
-    _speciality_id: { type: Schema.Types.ObjectId, ref: 'brbrbbr' }
+   /// _speciality_id: { type: Schema.Types.ObjectId, ref: 'brbrbbr' }
 });
 
 module.exports = mongoose.model('Entrant', EntrantSchema);
