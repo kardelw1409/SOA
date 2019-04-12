@@ -5,22 +5,22 @@ module.exports.create = (req, res) => {
     // Проверка
     if (!req.body.medal) {
         return res.status(400).send({
-            message: "Entrant content can not be empty"
+            message: "Entrant content can not be empty1"
         });
     }
     if (!req.body.total_score) {
         return res.status(400).send({
-            message: "Entrant content can not be empty"
+            message: "Entrant content can not be empty2"
         });
     }
-    if (!req.body.is_entranted) {
-        return res.status(400).send({
-            message: "Entrant content can not be empty"
-        });
-    }
+  //  if (!req.body.is_entranted) {
+     //   return res.status(400).send({
+       //     message: "Entrant content can not be empty3"
+        //});
+    //}
     if (!req.body.entrant_year) {
         return res.status(400).send({
-            message: "Entrant content can not be empty"
+            message: "Entrant content can not be empty4"
         });
     }
     // Создание абитуриента
