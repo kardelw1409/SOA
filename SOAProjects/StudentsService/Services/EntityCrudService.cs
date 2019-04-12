@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace StudentsService.Services
@@ -26,38 +27,38 @@ namespace StudentsService.Services
             DbFactory = dbFactory;
         }
 
-        public void Create(TEntity entity)
+        public async Task Create(TEntity entity)
         {
             DbContext.Set<TEntity>().Add(entity);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
 
-        public void Remove(TEntity entity)
+        public async Task Remove(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
 
-        public TEntity FindById(int id)
+        public async Task<TEntity> FindById(int id)
         {
-            return DbContext.Set<TEntity>().Find(id);
+            return await DbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return DbContext.Set<TEntity>().AsNoTracking().ToList();
+            return await DbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
             DbContext.Entry(entity).State = EntityState.Modified;
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
 
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        public async Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate)
         {
-            return DbContext.Set<TEntity>().AsNoTracking().Where(predicate).ToList();
+            return await QueryableExtensions.ToListAsync(DbContext.Set<TEntity>().Where(predicate).AsQueryable());
         }
 
         public void Dispose()

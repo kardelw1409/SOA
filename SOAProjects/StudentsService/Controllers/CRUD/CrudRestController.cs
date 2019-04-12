@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -20,9 +21,9 @@ namespace StudentsService.Controllers
             this.service = service;
         }
 
-        public virtual IHttpActionResult GetEntity(int id)
+        public async virtual Task<IHttpActionResult> GetEntity(int id)
         {
-            TEntity entity = service.FindById(id);
+            TEntity entity = await service.FindById(id);
             if (entity == null)
             {
                 return NotFound();
@@ -31,24 +32,24 @@ namespace StudentsService.Controllers
             return Ok(entity);
         }
 
-        public virtual IQueryable<TEntity> GetEntities()
+        public async virtual Task<IQueryable<TEntity>> GetEntities()
         {
-            return service.GetAll().AsQueryable();
+            return (await service.GetAll()).AsQueryable();
         }
 
-        public virtual IHttpActionResult PostEntity(TEntity entity)
+        public async virtual Task<IHttpActionResult> PostEntity(TEntity entity)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            service.Create(entity);
+            await service.Create(entity);
 
             return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
         }
 
-        public virtual IHttpActionResult PutEntity(int id, TEntity model)
+        public async virtual Task<IHttpActionResult> PutEntity(int id, TEntity model)
         {
             if (!ModelState.IsValid)
             {
@@ -62,7 +63,7 @@ namespace StudentsService.Controllers
 
             try
             {
-                service.Update(model);
+                await service.Update(model);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,9 +80,9 @@ namespace StudentsService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        public virtual IHttpActionResult DeleteEntity(TEntity entity)
+        public async virtual Task<IHttpActionResult> DeleteEntity(TEntity entity)
         {
-            service.Remove(entity);
+            await service.Remove(entity);
             return Ok(entity);
         }
 

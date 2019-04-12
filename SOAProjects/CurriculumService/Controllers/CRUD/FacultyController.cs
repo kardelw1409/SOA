@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -20,30 +21,30 @@ namespace CurriculumService.Controllers
         }
 
         [ResponseType(typeof(Faculty))]
-        public override IHttpActionResult DeleteEntity(Faculty entity)
+        public override Task<IHttpActionResult> DeleteEntity(Faculty entity)
         {
             return base.DeleteEntity(entity);
         }
 
-        public override IQueryable<Faculty> GetEntities()
+        public override Task<IQueryable<Faculty>> GetEntities()
         {
             return base.GetEntities();
         }
 
         [ResponseType(typeof(Faculty))]
-        public override IHttpActionResult GetEntity(int id)
+        public override Task<IHttpActionResult> GetEntity(int id)
         {
             return base.GetEntity(id);
         }
 
         [ResponseType(typeof(Faculty))]
-        public override IHttpActionResult PostEntity(Faculty entity)
+        public override Task<IHttpActionResult> PostEntity(Faculty entity)
         {
             return base.PostEntity(entity);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult PutEntity(int id, Faculty model)
+        public override Task<IHttpActionResult> PutEntity(int id, Faculty model)
         {
             return base.PutEntity(id, model);
         }

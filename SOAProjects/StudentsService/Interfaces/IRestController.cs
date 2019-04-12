@@ -12,14 +12,14 @@ namespace StudentsService.Interfaces
         where TEntity : Entity
     {
         // GET: api/Models
-        IQueryable<TEntity> GetEntities();
+        Task<IQueryable<TEntity>> GetEntities();
         // GET: api/Models/5
-        IHttpActionResult GetEntity(int id);
+        Task<IHttpActionResult> GetEntity(int id);
         // PUT: api/Models/5
-        IHttpActionResult PutEntity(int id, TEntity model);
+        Task<IHttpActionResult> PutEntity(int id, TEntity model);
         // POST: api/Models
-        IHttpActionResult PostEntity(TEntity model);
+        Task<IHttpActionResult> PostEntity(TEntity model);
         // DELETE: api/Models/5
-        IHttpActionResult DeleteEntity(TEntity entity);
+        Task<IHttpActionResult> DeleteEntity(TEntity entity);
     }
 }

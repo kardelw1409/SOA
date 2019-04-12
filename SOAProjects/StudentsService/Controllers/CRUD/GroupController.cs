@@ -2,11 +2,13 @@
 using StudentsService.Interfaces;
 using StudentsService.Models;
 using StudentsService.Repositories;
+using StudentsService.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -20,32 +22,44 @@ namespace StudentsService.Controllers
         }
 
         [ResponseType(typeof(Group))]
-        public override IHttpActionResult DeleteEntity(Group entity)
+        public async override Task<IHttpActionResult> DeleteEntity(Group entity)
         {
-            return base.DeleteEntity(entity);
+            return await base.DeleteEntity(entity);
         }
 
-        public override IQueryable<Group> GetEntities()
+        public async override Task<IQueryable<Group>> GetEntities()
         {
-            return base.GetEntities();
-        }
-
-        [ResponseType(typeof(Group))]
-        public override IHttpActionResult GetEntity(int id)
-        {
-            return base.GetEntity(id);
+            return await base.GetEntities();
         }
 
         [ResponseType(typeof(Group))]
-        public override IHttpActionResult PostEntity(Group entity)
+        public async override Task<IHttpActionResult> GetEntity(int id)
         {
-            return base.PostEntity(entity);
+            return await base.GetEntity(id);
+        }
+
+        [ResponseType(typeof(Group))]
+        public async override Task<IHttpActionResult> PostEntity(Group entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            SpecialityHttpService httpService = new SpecialityHttpService("http://localhost:65357/");
+            Speciality speciality = await httpService.GetProductAsync($"api/Speciality/{entity.SpecialityId}");
+            if (speciality == null)
+            {
+                return BadRequest(ModelState);
+            }
+            await service.Create(entity);
+
+            return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult PutEntity(int id, Group model)
+        public async override Task<IHttpActionResult> PutEntity(int id, Group model)
         {
-            return base.PutEntity(id, model);
+            return await base.PutEntity(id, model);
         }
 
         protected override void Dispose(bool disposing)

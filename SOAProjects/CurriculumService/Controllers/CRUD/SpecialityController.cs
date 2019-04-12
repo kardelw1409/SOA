@@ -3,6 +3,7 @@ using CurriculumService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -17,30 +18,30 @@ namespace CurriculumService.Controllers
         }
 
         [ResponseType(typeof(Speciality))]
-        public override IHttpActionResult DeleteEntity(Speciality entity)
+        public override Task<IHttpActionResult> DeleteEntity(Speciality entity)
         {
             return base.DeleteEntity(entity);
         }
 
-        public override IQueryable<Speciality> GetEntities()
+        public override Task<IQueryable<Speciality>> GetEntities()
         {
             return base.GetEntities();
         }
 
         [ResponseType(typeof(Speciality))]
-        public override IHttpActionResult GetEntity(int id)
+        public override Task<IHttpActionResult> GetEntity(int id)
         {
             return base.GetEntity(id);
         }
 
         [ResponseType(typeof(Speciality))]
-        public override IHttpActionResult PostEntity(Speciality entity)
+        public override Task<IHttpActionResult> PostEntity(Speciality entity)
         {
             return base.PostEntity(entity);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult PutEntity(int id, Speciality model)
+        public override Task<IHttpActionResult> PutEntity(int id, Speciality model)
         {
             return base.PutEntity(id, model);
         }

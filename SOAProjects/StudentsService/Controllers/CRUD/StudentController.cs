@@ -3,6 +3,7 @@ using StudentsService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -15,32 +16,32 @@ namespace StudentsService.Controllers
         {
 
         }
+
         [ResponseType(typeof(Student))]
-        public override IHttpActionResult DeleteEntity(Student entity)
+        public override Task<IHttpActionResult> DeleteEntity(Student entity)
         {
             return base.DeleteEntity(entity);
         }
 
-
-        public override IQueryable<Student> GetEntities()
+        public override Task<IQueryable<Student>> GetEntities()
         {
             return base.GetEntities();
         }
 
         [ResponseType(typeof(Student))]
-        public override IHttpActionResult GetEntity(int id)
+        public override Task<IHttpActionResult> GetEntity(int id)
         {
             return base.GetEntity(id);
         }
 
         [ResponseType(typeof(Student))]
-        public override IHttpActionResult PostEntity(Student entity)
+        public override Task<IHttpActionResult> PostEntity(Student entity)
         {
             return base.PostEntity(entity);
         }
 
         [ResponseType(typeof(void))]
-        public override IHttpActionResult PutEntity(int id, Student model)
+        public override Task<IHttpActionResult> PutEntity(int id, Student model)
         {
             return base.PutEntity(id, model);
         }
