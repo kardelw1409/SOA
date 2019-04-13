@@ -148,7 +148,7 @@
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Performance.cs" />
-    <Compile Include="Models\Speciality.cs" />
+    <Compile Include="Models\SpecialityDTO.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DbFactory.cs" />

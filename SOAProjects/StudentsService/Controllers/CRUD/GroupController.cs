@@ -46,10 +46,10 @@ namespace StudentsService.Controllers
                 return BadRequest(ModelState);
             }
             SpecialityHttpService httpService = new SpecialityHttpService("http://localhost:65357/");
-            Speciality speciality = await httpService.GetProductAsync($"api/Speciality/{entity.SpecialityId}");
+            SpecialityDTO speciality = await httpService.GetProductAsync($"api/Speciality/{entity.SpecialityId}");
             if (speciality == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
             await service.Create(entity);
 

@@ -35,8 +35,12 @@ namespace CurriculumService.Services
 
         public async Task Remove(TEntity entity)
         {
-            DbContext.Set<TEntity>().Remove(entity);
-            await DbContext.SaveChangesAsync();
+            var entityItem = DbContext.Set<TEntity>().Where(p => p.Id == entity.Id).FirstOrDefault();
+            if (entityItem != null)
+            {
+                DbContext.Set<TEntity>().Remove(entityItem);
+                await DbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<TEntity> FindById(int id)
@@ -51,7 +55,14 @@ namespace CurriculumService.Services
 
         public async Task Update(TEntity entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
+
+            var entityItem = DbContext.Set<TEntity>().Where(p => p.Id == entity.Id).FirstOrDefault();
+            if (entityItem != null)
+            {
+                entityItem = entity;
+                DbContext.SaveChanges();
+            }
+            //DbContext.Entry(entity).State = EntityState.Modified;
             await DbContext.SaveChangesAsync();
         }
 

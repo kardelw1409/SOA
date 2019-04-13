@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Кафедры</title>
+</head>
+<body>
+    <div>
+        <h2>
+            Все кафедры
+        </h2>
+        <ul id="faculties" />
+    </div>
+    <script src="../../Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        var uri = 'api/Faculty';
+
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(uri)
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#faculties'));
+                    });
+                });
+        });
+
+        function formatItem(item) {
+            return item.Name;
+        }
+
+        function find() {
+            var id = $('#FacultyId').val();
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $('#faculty').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#faculty').text('Error: ' + err);
+                });
+        }
+    </script>
+
+</body>
+</html>

@@ -21,13 +21,13 @@ namespace StudentsService.Services
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<Speciality> GetProductAsync(string path)
+        public async Task<SpecialityDTO> GetProductAsync(string path)
         {
-            Speciality speciality = null;
+            SpecialityDTO speciality = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                speciality = await response.Content.ReadAsAsync<Speciality>();
+                speciality = await response.Content.ReadAsAsync<SpecialityDTO>();
             }
             return speciality;
         }
