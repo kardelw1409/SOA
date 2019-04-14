@@ -25,6 +25,7 @@ module.exports.create = (req, res) => {
     }
     // Создание абитуриента
     const entrant = new Entrant({
+        _id: req.body.id,
         medal: req.body.medal,
         total_score: req.body.total_score,
         is_entranted: req.body.is_entranted,
