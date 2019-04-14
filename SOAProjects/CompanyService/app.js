@@ -1,23 +1,22 @@
-﻿//
+﻿//Подключение 
 const express = require('express');
 const bodyParser = require('body-parser');
-// create express app
+// Создание express(подключение)
 const app = express();
 
-// parse application/x-www-form-urlencoded
+// Парсинг /x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// parse application/json
+// Парсинг json
 app.use(bodyParser.json());
 
-// Configuring the database
-//require('module-alias/register')
+// Подключение БД js и модуля 
 const dbConfig = require('./config/database.js');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-// Connecting to the database
+// Подключение к бд
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
@@ -27,7 +26,7 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// define a simple route
+// Установление рута 
 app.get('/', (req, res) => {
     res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
 });
@@ -35,8 +34,9 @@ app.get('/', (req, res) => {
 require('./entrant/entrant_routes')(app);
 //require('module-alias/register');
 require('./profile/profile_routes')(app);
-//import * as routes from './room/room.routes.js';
-// listen for requests
+//import * as routes from './/.routes.js';
+//слушатель
+
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });

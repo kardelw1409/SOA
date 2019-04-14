@@ -1,19 +1,19 @@
 module.exports = (app) => {
-    //require('module-alias/register');
+    //подключение контролера
     const profiles = require('./profile_controller');//
 
-    // Create a new Profile
+    // Создание профиля
     app.post('/Profile', profiles.create);
 
-    // Retrieve all Profiles
+    // Нахождение всех
     app.get('/Profile', profiles.findAll);
 
-    // Retrieve a single Profile with profileId
+    // Нахождение по ID
     app.get('/Profile/:profilesId', profiles.findOne);
 
-    // Update a Profile with profileId
+    // Обновление по ID
     app.put('/Profile/:profilesId', profiles.update);
 
-    // Delete a Profile with profileId
+    // Удаление профиля по ID
     app.delete('/Profile/:profilesId', profiles.delete);
 }

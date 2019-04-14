@@ -1,5 +1,4 @@
 const Profile = require('./profile_model');
-//import
 // Создание и сохранение Profile
 module.exports.create = (req, res) => {
     // Проверка
@@ -23,7 +22,7 @@ module.exports.create = (req, res) => {
             message: "Entrant content can not be empty"
         });
     }
-    // Создание profile
+    // Создание профиля студента
     const profile = new Profile({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -99,7 +98,7 @@ module.exports.update = (req, res) => {
             message: "Profile content can not be empty"
         });
     }
-    // Find profile and update it with the request body
+    // Нахождение и обновление абитуриента посредством запроса
     Profile.findByIdAndUpdate(req.params.profileId, {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -125,7 +124,7 @@ module.exports.update = (req, res) => {
         });
 };
 
-// Delete a profile with the specified profileId in the request
+// Удалить профиль по ID запроса
 module.exports.delete = (req, res) => {
     Profile.findByIdAndRemove(req.params.profileId)
         .then(profile => {

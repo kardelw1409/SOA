@@ -1,4 +1,3 @@
-//Импортирование
 const Entrant = require('./entrant_model');
 // Создание и сохранение нового абитуриента
 module.exports.create = (req, res) => {
@@ -13,11 +12,12 @@ module.exports.create = (req, res) => {
             message: "Entrant content can not be empty2"
         });
     }
-  //  if (!req.body.is_entranted) {
-     //   return res.status(400).send({
-       //     message: "Entrant content can not be empty3"
-        //});
-    //}
+  /*  if (!req.body.is_entranted) {
+      return res.status(400).send({
+      message: "Entrant content can not be empty3"
+        });
+    }
+  */
     if (!req.body.entrant_year) {
         return res.status(400).send({
             message: "Entrant content can not be empty4"
@@ -31,7 +31,7 @@ module.exports.create = (req, res) => {
         entrant_year: req.body.entrant_year
     });
 
-    // Сохранение абитуриенат а бд
+    // Сохранение абитуриента а бд
     entrant.save()
         .then(data => {
             res.send(data);
@@ -99,7 +99,7 @@ module.exports.update = (req, res) => {
             message: "Error"
         });
     }
-    // Нахождение и обновление абитуриента посредством тела запроса
+    // Нахождение и обновление абитуриента посредством запроса
     Entrant.findByIdAndUpdate(req.params.entrantId, {
         medal: req.body.medal,
         total_score: req.body.total_score,
