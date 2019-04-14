@@ -1,47 +1,144 @@
 ﻿<!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title>Кафедры</title>
+    <title></title>
+    <link href="Content/bootstrap.min.css"
+          rel="stylesheet" />
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+
 </head>
 <body>
-    <div>
-        <h2>
-            Все кафедры
-        </h2>
-        <ul id="faculties" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Факультеты</h2>
+                <table id="facultyTable"
+                       class="table table-bordered
+                 table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Название факультета</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                </table>
+                <button type="button" id="addButton"
+                        class="btn btn-primary"
+                        onclick="addClick();">
+                    Добавить
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-info">
+                <h3>Добавление факультета</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="facultyname">Название</label>
+                    <input type="text" id="facultyname"
+                           class="form-control" />
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" id="updateButton"
+                        class="btn btn-primary"
+                        onclick="updateClick();">
+                    Добавить
+                </button>
+            </div>
+        </div>
     </div>
-    <script src="../../Scripts/jquery-3.3.1.min.js"></script>
     <script>
-        var uri = 'api/Faculty';
-
+        // Handle click event on Update button
+        function updateClick() {
+        }
+        // Handle click event on Add button
+        function addClick() {
+        }
+        function facultyList() {
+            // Call Web API to get a list of Faculty
+            $.ajax({
+                url: '/api/Faculty/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (faculties) {
+                    facultyListSuccess(faculties);
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
+        }
+        function facultyListSuccess(faculties) {
+            // Iterate over the collection of data
+            $.each(faculties, function (index, faculty) {
+                // Add a row to the Faculty table
+                facultyAddRow(faculty);
+            });
+        }
+        function facultyAddRow(faculty) {
+            // Check if <tbody> tag exists, add one if not
+            if ($("#facultyTable tbody").length == 0) {
+                $("#facultyTable").append("<tbody></tbody>");
+            }
+            // Append row to <table>
+            $("#facultyTable tbody").append(
+                facultyBuildTableRow(faculty));
+        }
+        function facultyBuildTableRow(faculty) {
+            var ret =
+                "<tr>" +
+                "<td>" + faculty.Name +
+                "</td>" +
+                + "<td><button type='button' " +
+                "onclick='facultyGet(this);' " +
+                "class='btn btn-default' " +
+                "data-id='" + faculty.Id + "'>" +
+                "<span class='glyphicon glyphicon-edit' />"
+                + "</button></td>"
+                "</tr>";
+            return ret;
+        }
+        function handleException(request, message,
+            error) {
+            var msg = "";
+            msg += "Code: " + request.status + "\n";
+            msg += "Text: " + request.statusText + "\n";
+            if (request.responseJSON != null) {
+                msg += "Message" +
+                    request.responseJSON.Message + "\n";
+            }
+            alert(msg);
+        }
         $(document).ready(function () {
-            // Send an AJAX request
-            $.getJSON(uri)
-                .done(function (data) {
-                    // On success, 'data' contains a list of products.
-                    $.each(data, function (key, item) {
-                        // Add a list item for the product.
-                        $('<li>', { text: formatItem(item) }).appendTo($('#faculties'));
-                    });
-                });
+            facultyList();
         });
 
-        function formatItem(item) {
-            return item.Name;
-        }
+        function facultyGet(ctl) {
+            // Get product id from data- attribute
+            var id = $(ctl).data("id");
 
-        function find() {
-            var id = $('#FacultyId').val();
-            $.getJSON(uri + '/' + id)
-                .done(function (data) {
-                    $('#faculty').text(formatItem(data));
-                })
-                .fail(function (jqXHR, textStatus, err) {
-                    $('#faculty').text('Error: ' + err);
-                });
+            // Store product id in hidden field
+            $("#facultyid").val(id);
+
+            // Call Web API to get a list of Products
+            $.ajax({
+                url: "/api/Faculty/" + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (faculty) {
+                    productToFields(faculty);
+
+                    // Change Update Button Text
+                    $("#updateButton").text("Update");
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
         }
     </script>
-
 </body>
 </html>
