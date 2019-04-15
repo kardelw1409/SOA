@@ -1,6 +1,7 @@
 ﻿//Подключение 
 const express = require('express');
 const bodyParser = require('body-parser');
+var path = require('path');
 // Создание express(подключение)
 const app = express();
 
@@ -28,7 +29,7 @@ mongoose.connect(dbConfig.url, {
 
 // Установление рута 
 app.get('/', (req, res) => {
-    res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
+    res.sendFile( 'index.html', { root: path.join(__dirname, './public') });
 });
 //require('module-alias/register');
 require('./entrant/entrant_routes')(app);
