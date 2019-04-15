@@ -29,7 +29,7 @@ module.exports.create = (req, res) => {
         last_name: req.body.last_name,
         patronymic: req.body.patronymic,
         birthday: req.body.birthday,
-        _entrant_id: Entrant.findById(req.params._entrant_id)
+      //  _entrant_id: Entrant.findById(req.params._entrant_id)
     });
 
     // Сохранение в бд

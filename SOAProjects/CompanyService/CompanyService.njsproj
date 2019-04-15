@@ -43,6 +43,7 @@
     <Compile Include="routes\users.js" />
     <Content Include="bin\Microsoft.NodejsTools.WebRole.dll" />
     <Content Include="package.json" />
+    <Content Include="public\index.html" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
     <Content Include="views\index.pug" />
