@@ -24,11 +24,6 @@ namespace StudentsService.Controllers
         public async virtual Task<IHttpActionResult> GetEntity(int id)
         {
             TEntity entity = await service.FindById(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
             return Ok(entity);
         }
 
@@ -49,40 +44,26 @@ namespace StudentsService.Controllers
             return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
         }
 
-        public async virtual Task<IHttpActionResult> PutEntity(int id, TEntity model)
+        public async virtual Task<IHttpActionResult> PutEntity(TEntity model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != model.Id)
-            {
-                return BadRequest();
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 await service.Update(model);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!EntityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
-        public async virtual Task<IHttpActionResult> DeleteEntity(TEntity entity)
+        public async virtual Task<IHttpActionResult> DeleteEntity(int id)
         {
-            await service.Remove(entity);
+            var entity = await service.Remove(id);
             return Ok(entity);
         }
 

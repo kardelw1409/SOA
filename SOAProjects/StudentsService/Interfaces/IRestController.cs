@@ -16,10 +16,10 @@ namespace StudentsService.Interfaces
         // GET: api/Models/5
         Task<IHttpActionResult> GetEntity(int id);
         // PUT: api/Models/5
-        Task<IHttpActionResult> PutEntity(int id, TEntity model);
+        Task<IHttpActionResult> PutEntity(TEntity model);
         // POST: api/Models
         Task<IHttpActionResult> PostEntity(TEntity model);
         // DELETE: api/Models/5
-        Task<IHttpActionResult> DeleteEntity(TEntity entity);
+        Task<IHttpActionResult> DeleteEntity(int id);
     }
 }

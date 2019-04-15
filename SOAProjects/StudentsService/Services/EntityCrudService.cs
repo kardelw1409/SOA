@@ -1,9 +1,11 @@
 ﻿using StudentsService.Context;
+using StudentsService.Infrastructure;
 using StudentsService.Interfaces;
 using StudentsService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -33,10 +35,16 @@ namespace StudentsService.Services
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task Remove(TEntity entity)
+        public async Task<TEntity> Remove(int id)
         {
-            DbContext.Set<TEntity>().Remove(entity);
+            var entityItem = await FindById(id);
+            if (entityItem == null)
+            {
+                throw new NullReferenceException("Data not find");
+            }
+            DbContext.Set<TEntity>().Remove(entityItem);
             await DbContext.SaveChangesAsync();
+            return entityItem;
         }
 
         public async Task<TEntity> FindById(int id)
@@ -51,8 +59,13 @@ namespace StudentsService.Services
 
         public async Task Update(TEntity entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
-            await DbContext.SaveChangesAsync();
+            var entityItem = await DbContext.Set<TEntity>().SingleOrDefaultAsync(p => p.Id == entity.Id);
+            if (entityItem != null)
+            {
+                DbContext.Entry(entityItem).CurrentValues.SetValues(entity);
+                await DbContext.SaveChangesAsync();
+            }
+
         }
 
 

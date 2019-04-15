@@ -14,7 +14,7 @@ namespace StudentsService.Interfaces
         Task<TEntity> FindById(int id);
         Task<IEnumerable<TEntity>> GetAll();
         Task<IEnumerable<TEntity>> Get(Func<TEntity, bool> predicate);
-        Task Remove(TEntity item);
+        Task<TEntity> Remove(int id);
         Task Update(TEntity item);
     }
 }   

@@ -1,9 +1,11 @@
 ﻿using CurriculumService.Context;
+using CurriculumService.Infrastructure;
 using CurriculumService.Interfaces;
 using CurriculumService.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -33,14 +35,22 @@ namespace CurriculumService.Services
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task Remove(TEntity entity)
+        public async Task<TEntity> Remove(int id)
         {
-            var entityItem = DbContext.Set<TEntity>().Where(p => p.Id == entity.Id).FirstOrDefault();
+            /*var entityItem = DbContext.Set<TEntity>().Where(p => p.Id == entity.Id).FirstOrDefault();
             if (entityItem != null)
             {
                 DbContext.Set<TEntity>().Remove(entityItem);
                 await DbContext.SaveChangesAsync();
+            }*/
+            var entityItem = await FindById(id);
+            if (entityItem == null)
+            {
+                throw new NullReferenceException("Data not find");
             }
+            DbContext.Set<TEntity>().Remove(entityItem);
+            await DbContext.SaveChangesAsync();
+            return entityItem;
         }
 
         public async Task<TEntity> FindById(int id)
@@ -55,15 +65,13 @@ namespace CurriculumService.Services
 
         public async Task Update(TEntity entity)
         {
-
-            var entityItem = DbContext.Set<TEntity>().Where(p => p.Id == entity.Id).FirstOrDefault();
+            var entityItem = await DbContext.Set<TEntity>().SingleOrDefaultAsync(p => p.Id == entity.Id);
             if (entityItem != null)
             {
-                entityItem = entity;
-                DbContext.SaveChanges();
+                DbContext.Entry(entityItem).CurrentValues.SetValues(entity);
+                await DbContext.SaveChangesAsync();
             }
-            //DbContext.Entry(entity).State = EntityState.Modified;
-            await DbContext.SaveChangesAsync();
+
         }
 
 

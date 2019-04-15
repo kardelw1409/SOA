@@ -18,15 +18,16 @@
                     <thead>
                         <tr>
                             <th>Название факультета</th>
-                            <th>Edit</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                 </table>
-                <button type="button" id="addButton"
+                <!--<button type="button" id="addButton"
                         class="btn btn-primary"
                         onclick="addClick();">
                     Добавить
-                </button>
+                </button>-->
             </div>
         </div>
         <br>
@@ -45,7 +46,7 @@
                 <button type="button" id="updateButton"
                         class="btn btn-primary"
                         onclick="updateClick();">
-                    Добавить
+                    Add
                 </button>
             </div>
         </div>
@@ -53,9 +54,69 @@
     <script>
         // Handle click event on Update button
         function updateClick() {
+            // Build faculty object from inputs
+            Faculty = new Object();
+            Faculty.Name = $("#facultyname").val();
+            if (Faculty.Name.length != 0) {
+                if ($("#updateButton").text().trim() ==
+                    "Add") {
+                    facultyAdd(Faculty);
+                }
+                else {
+                    facultyUpdate(Faculty);
+                }
+            }
+            else {
+                alert("Поле пустое");
+            }
+
+
+        }
+        function facultyUpdate(faculty) {
+            $.ajax({
+                url: "/api/Faculty",
+                type: 'PUT',
+                contentType:
+                    "application/json;charset=utf-8",
+                data: JSON.stringify(faculty),
+                success: function (faculty) {
+                    facultyUpdateSuccess(faculty);
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
+        }
+        function facultyUpdateSuccess(faculty) {
+            facultyUpdateInTable(faculty);
         }
         // Handle click event on Add button
         function addClick() {
+            formClear();
+        }
+
+        function facultyAdd(faculty) {
+            //console.log("Add");
+            $.ajax({
+                url: "/api/Faculty",
+                type: 'POST',
+                contentType:
+                    "application/json;charset=utf-8",
+                data: JSON.stringify(faculty),
+                success: function (faculty) {
+                    facultyAddSuccess(faculty);
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
+        }
+        function formClear() {
+            $("#facultyname").val("");
+        }
+        function facultyAddSuccess(faculty) {
+            facultyAddRow(faculty);
+            formClear();
         }
         function facultyList() {
             // Call Web API to get a list of Faculty
@@ -91,13 +152,21 @@
             var ret =
                 "<tr>" +
                 "<td>" + faculty.Name +
-                "</td>" +
+                "</td>"
                 + "<td><button type='button' " +
                 "onclick='facultyGet(this);' " +
-                "class='btn btn-default' " +
+                "class='btn btn-primary' " +
+                "data-id =" + faculty.Id + ">" +
+                "Edit"
+                + "</button></td>" + 
+                "<td>" +
+                "<button type='button' " +
+                "onclick='facultyDelete(this);' " +
+                "class='btn btn-primary' " +
                 "data-id='" + faculty.Id + "'>" +
-                "<span class='glyphicon glyphicon-edit' />"
-                + "</button></td>"
+                "Delete" +
+                "</button>" +
+                "</td>" +
                 "</tr>";
             return ret;
         }
@@ -117,22 +186,49 @@
         });
 
         function facultyGet(ctl) {
-            // Get product id from data- attribute
+            // Get faculty id from data- attribute
             var id = $(ctl).data("id");
-
-            // Store product id in hidden field
+            // Store faculty id in hidden field
             $("#facultyid").val(id);
 
-            // Call Web API to get a list of Products
+            // Call Web API to get a list of Faculties
             $.ajax({
                 url: "/api/Faculty/" + id,
                 type: 'GET',
                 dataType: 'json',
                 success: function (faculty) {
-                    productToFields(faculty);
+                    facultyToFields(faculty);
 
                     // Change Update Button Text
                     $("#updateButton").text("Update");
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                }
+            });
+        }
+        function facultyToFields(faculty) {
+            $("#facultyname").val(faculty.Name);
+        }
+        function facultyUpdateInTable(faculty) {
+            // Find Faculty in <table>
+            var row = $("#facultyTable button[data-id='" +
+                faculty.Id + "']").parents("tr")[0];
+            // Add changed Faculty to table
+            $(row).after(facultyBuildTableRow(faculty));
+            // Remove original Faculty
+            $(row).remove();
+            formClear(); // Clear form fields
+            // Change Update Button Text
+            $("#updateButton").text("Add");
+        }
+        function facultyDelete(ctl) {
+            var id = $(ctl).data("id");
+            $.ajax({
+                url: "/api/Faculty/" + id,
+                type: 'DELETE',
+                success: function (faculty) {
+                    $(ctl).parents("tr").remove();
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);

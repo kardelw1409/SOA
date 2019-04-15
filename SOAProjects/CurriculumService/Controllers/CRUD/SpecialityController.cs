@@ -18,9 +18,9 @@ namespace CurriculumService.Controllers
         }
 
         [ResponseType(typeof(Speciality))]
-        public override Task<IHttpActionResult> DeleteEntity(Speciality entity)
+        public override Task<IHttpActionResult> DeleteEntity(int id)
         {
-            return base.DeleteEntity(entity);
+            return base.DeleteEntity(id);
         }
 
         public override Task<IQueryable<Speciality>> GetEntities()
@@ -41,9 +41,9 @@ namespace CurriculumService.Controllers
         }
 
         [ResponseType(typeof(void))]
-        public override Task<IHttpActionResult> PutEntity(int id, Speciality model)
+        public override Task<IHttpActionResult> PutEntity(Speciality model)
         {
-            return base.PutEntity(id, model);
+            return base.PutEntity(model);
         }
 
         protected override void Dispose(bool disposing)

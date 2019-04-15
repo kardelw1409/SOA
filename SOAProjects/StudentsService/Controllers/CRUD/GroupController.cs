@@ -22,9 +22,9 @@ namespace StudentsService.Controllers
         }
 
         [ResponseType(typeof(Group))]
-        public async override Task<IHttpActionResult> DeleteEntity(Group entity)
+        public async override Task<IHttpActionResult> DeleteEntity(int id)
         {
-            return await base.DeleteEntity(entity);
+            return await base.DeleteEntity(id);
         }
 
         public async override Task<IQueryable<Group>> GetEntities()
@@ -57,9 +57,9 @@ namespace StudentsService.Controllers
         }
 
         [ResponseType(typeof(void))]
-        public async override Task<IHttpActionResult> PutEntity(int id, Group model)
+        public async override Task<IHttpActionResult> PutEntity(Group model)
         {
-            return await base.PutEntity(id, model);
+            return await base.PutEntity(model);
         }
 
         protected override void Dispose(bool disposing)

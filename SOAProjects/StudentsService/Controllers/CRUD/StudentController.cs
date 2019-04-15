@@ -18,9 +18,9 @@ namespace StudentsService.Controllers
         }
 
         [ResponseType(typeof(Student))]
-        public override Task<IHttpActionResult> DeleteEntity(Student entity)
+        public override Task<IHttpActionResult> DeleteEntity(int id)
         {
-            return base.DeleteEntity(entity);
+            return base.DeleteEntity(id);
         }
 
         public override Task<IQueryable<Student>> GetEntities()
@@ -41,9 +41,9 @@ namespace StudentsService.Controllers
         }
 
         [ResponseType(typeof(void))]
-        public override Task<IHttpActionResult> PutEntity(int id, Student model)
+        public override Task<IHttpActionResult> PutEntity(Student model)
         {
-            return base.PutEntity(id, model);
+            return base.PutEntity(model);
         }
 
         protected override void Dispose(bool disposing)
