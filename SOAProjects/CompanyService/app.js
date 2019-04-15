@@ -16,7 +16,7 @@ const dbConfig = require('./config/database.js');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-
+app.use(express.static(path.join(__dirname, 'public')));
 // Подключение к бд
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
@@ -30,6 +30,7 @@ mongoose.connect(dbConfig.url, {
 // Установление рута 
 app.get('/', (req, res) => {
     res.sendFile( 'index.html', { root: path.join(__dirname, './public') });
+    //res.sendFile('index.html');
 });
 //require('module-alias/register');
 require('./entrant/entrant_routes')(app);
