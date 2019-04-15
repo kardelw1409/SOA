@@ -4,7 +4,7 @@
     self.Course = ko.observable();
     self.Enrolled = ko.observable();
     self.GroupId = ko.observable();  
-    self.Roomid = ko.observable();
+    self.RoomId = ko.observable();
     self.Id = ko.observable();
     
   
@@ -36,7 +36,7 @@
         self.Course('');
         self.Enrolled('');
         self.GroupId('');
-        self.Roomid('');
+        self.RoomId('');
         self.Id(''); 
     }  
   
@@ -47,7 +47,7 @@
             Course: self.Course(),
             Enrolled: self.Enrolled(),
             GroupId: self.GroupId(),  
-            Roomid: self.Roomid(),
+            RoomId: self.RoomId(),
             Id: self.Id()
         };  
         ajaxFunction(StudentUri, 'POST', StudObject).done(function () {  
@@ -72,8 +72,8 @@
     self.detailStudent = function (selectedStudent) {  
         self.Course(selectedStudent.Course);
         self.Enrolled(selectedStudent.Enrolled);
-        self.Roomid(selectedStudent.Roomid);  
         self.GroupId(selectedStudent.GroupId);
+        self.RoomId(selectedStudent.RoomId);  
         self.Id(selectedStudent.Id);
   
         $('#Save').hide();  
@@ -101,10 +101,10 @@
         var StudObject = {
             Course: self.Course(),
             Enrolled: self.Enrolled(),
-            Roomid: self.Roomid(),  
             GroupId: self.GroupId(),
+            RoomId: self.RoomId(),
             Id: self.Id()
-        };  
+        };
   
         ajaxFunction(StudentUri + self.Id(), 'PUT', StudObject).done(function () {  
             alert('Student Updated Successfully !');  

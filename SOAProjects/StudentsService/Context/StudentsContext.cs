@@ -17,7 +17,7 @@ namespace StudentsService.Context
 
         static StudentsContext()
         {
-            Database.SetInitializer(new StoreDbInitializer());
+            //Database.SetInitializer(new StoreDbInitializer());
         }
 
         public DbSet<Student> Students { get; set; }  

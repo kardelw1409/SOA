@@ -11,7 +11,9 @@
 
     <!-- CSS -->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
-   
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
 
 
 
@@ -63,7 +65,7 @@
 
                             <div class="form-group">
                                 <label for="RoomId">Room ID</label>
-                                <input type="number" id="RoomId" class="form-control" data-bind="value: Roomid" placeholder="Room ID" />
+                                <input type="number" id="RoomId" class="form-control" data-bind="value: RoomId" placeholder="Room ID" />
                             </div> <!-- END RoomId -->
 
                             <div class="form-group">
@@ -130,8 +132,7 @@
                             <tbody data-bind="foreach: studentList">
 
                                 <tr>
-
-                                    <td> <button type="button" class="btn btn-default btn-xs" data-bind="click: $root.detailStudent"> <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span></button> </td>
+                                    <td> <button type="button" class="btn btn-warning" data-bind="click: $root.detailStudent"> <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>Edit</button> </td>
                                     <td> <span data-bind="text: Course"></span></td>
                                     <td> <span data-bind="text: Enrolled"></span></td>
                                     <td> <span data-bind="text: GroupId"></span> </td>
@@ -141,6 +142,7 @@
 
                                         <button type="button" class="btn btn-danger btn-xs">
                                             <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true" data-bind="click: $root.deleteStudent"></span>
+                                            Delete
                                         </button>
                                     </td>
 
@@ -167,10 +169,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/knockout-3.5.0.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 
     <!-- app.js-->
     <script src="Scripts/app.js"></script>
+
 
 </body>
 </html>   
