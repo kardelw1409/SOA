@@ -29,7 +29,8 @@ module.exports.create = (req, res) => {
         medal: req.body.medal,
         total_score: req.body.total_score,
         is_entranted: req.body.is_entranted,
-        entrant_year: req.body.entrant_year
+        entrant_year: req.body.entrant_year,
+        _profile_id: Profile.findById(req.params._profile_id)
     });
 
     // Сохранение абитуриента а бд

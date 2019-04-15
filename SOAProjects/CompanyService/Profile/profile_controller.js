@@ -22,14 +22,14 @@ module.exports.create = (req, res) => {
             message: "Entrant content can not be empty"
         });
     }
-    // Создание профиля студента
+    // Создание данные человека
     const profile = new Profile({
         _id:req.body.id,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         patronymic: req.body.patronymic,
         birthday: req.body.birthday,
-        entrant_id: req.body.entrant_id
+        _entrant_id: Entrant.findById(req.params._entrant_id)
     });
 
     // Сохранение в бд
