@@ -11,35 +11,33 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Факультеты</h2>
-                <table id="facultyTable"
+                <h2>Кафедры</h2>
+                <table id="departmentTable"
                        class="table table-bordered
                  table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Название факультета</th>
+                            <th>Название кафедры</th>
+                            <th>Факультет</th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
                 </table>
-                <!--<button type="button" id="addButton"
-                        class="btn btn-primary"
-                        onclick="addClick();">
-                    Добавить
-                </button>-->
             </div>
         </div>
         <br>
         <div class="panel panel-primary">
             <div class="panel-info">
-                <h3>Добавление факультета</h3>
+                <h3>Добавление кафедры</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <input type="hidden" id="facultyid" value="0"/>
-                    <label for="facultyname">Название</label>
-                    <input type="text" id="facultyname" class="form-control" />
+                    <input type="hidden" id="departmentid" value="0" />
+                    <label for="departmentname">Название</label>
+                    <input type="text" id="departmentname" class="form-control" />
+                    <label for="faculty">Факультет</label>
+                    <select id="faculty" name="faculty-drop"></select>
                 </div>
             </div>
             <div class="panel-footer">
@@ -51,21 +49,20 @@
             </div>
         </div>
     </div>
-    <div><p><a href="./department.html">Кафедры</a></p></div>
     <script>
-        // Handle click event on Update button
+
         function updateClick() {
-            // Build faculty object from inputs
-            Faculty = new Object();
-            Faculty.Id = $("#facultyid").val();
-            Faculty.Name = $("#facultyname").val();
+            Department = new Object();
+            Department.Id = $("#departmentid").val();
+            Department.Name = $("#departmentname").val();
+            Department.Name = $("#faculty").val();
             if (Faculty.Name.length != 0) {
                 if ($("#updateButton").text().trim() ==
                     "Add") {
-                    facultyAdd(Faculty);
+                    departmentAdd(Department);
                 }
                 else {
-                    facultyUpdate(Faculty);
+                    departmentUpdate(Department);
                 }
             }
             else {
@@ -74,40 +71,38 @@
 
 
         }
-        function facultyUpdate(faculty) {
+        function departmentUpdate(department) {
             $.ajax({
-                url: "/api/Faculty",
+                url: "/api/Department",
                 type: 'PUT',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(faculty),
-                success: function (faculty) {
-                    console.log("up");
-                    facultyUpdateSuccess(faculty);
+                data: JSON.stringify(department),
+                success: function (department) {
+                    facultyUpdateSuccess(department);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function facultyUpdateSuccess(faculty) {
-            facultyUpdateInTable(faculty);
+        function departmentUpdateSuccess(department) {
+            departmentUpdateInTable(department);
         }
-        // Handle click event on Add button
+
         function addClick() {
             formClear();
         }
 
-        function facultyAdd(faculty) {
-            //console.log("Add");
+        function departmentAdd(department) {
             $.ajax({
-                url: "/api/Faculty",
+                url: "/api/Department",
                 type: 'POST',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(faculty),
-                success: function (faculty) {
-                    facultyAddSuccess(faculty);
+                data: JSON.stringify(department),
+                success: function (department) {
+                    departmentAddSuccess(department);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
@@ -115,64 +110,81 @@
             });
         }
         function formClear() {
-            $("#facultyname").val("");
+            $("#departmentname").val("");
         }
-        function facultyAddSuccess(faculty) {
-            facultyAddRow(faculty);
+        function departmentAddSuccess(department) {
+            departmentAddRow(department);
             formClear();
         }
-        function facultyList() {
-            // Call Web API to get a list of Faculty
+        function departmentList() {
+
             $.ajax({
-                url: '/api/Faculty/',
+                url: '/api/Department/',
                 type: 'GET',
                 dataType: 'json',
-                success: function (faculties) {
-                    facultyListSuccess(faculties);
+                success: function (departments) {
+                    departmentListSuccess(departments);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function facultyListSuccess(faculties) {
-            // Iterate over the collection of data
-            $.each(faculties, function (index, faculty) {
-                // Add a row to the Faculty table
-                facultyAddRow(faculty);
+        function departmentListSuccess(departments) {
+
+            $.each(departments, function (index, department) {
+                departmentAddRow(department);
             });
         }
-        function facultyAddRow(faculty) {
-            // Check if <tbody> tag exists, add one if not
-            if ($("#facultyTable tbody").length == 0) {
-                $("#facultyTable").append("<tbody></tbody>");
+        function departmentAddRow(department) {
+            if ($("#departmentTable tbody").length == 0) {
+                $("#departmentTable").append("<tbody></tbody>");
             }
-            // Append row to <table>
-            $("#facultyTable tbody").append(
-                facultyBuildTableRow(faculty));
+            $("#departmentTable tbody").append(
+                departmentBuildTableRow(department));
         }
-        function facultyBuildTableRow(faculty) {
+        function departmentBuildTableRow(department) {
+            console.log(department.FacultyId);
             var ret =
                 "<tr>" +
-                "<td>" + faculty.Name +
+                "<td>" + department.Name +
+                "</td>" + "<td>" +
                 "</td>"
                 + "<td><button type='button' " +
-                "onclick='facultyGet(this);' " +
+                "onclick='departmentGet(this);' " +
                 "class='btn btn-primary' " +
-                "data-id =" + faculty.Id + ">" +
+                "data-id =" + department.Id + ">" +
                 "Edit"
-                + "</button></td>" + 
+                + "</button></td>" +
                 "<td>" +
                 "<button type='button' " +
-                "onclick='facultyDelete(this);' " +
+                "onclick='departmentDelete(this);' " +
                 "class='btn btn-primary' " +
-                "data-id='" + faculty.Id + "'>" +
+                "data-id='" + department.Id + "'>" +
                 "Delete" +
                 "</button>" +
                 "</td>" +
                 "</tr>";
             return ret;
         }
+
+        function facultyGet(id) {
+            $("#facultyid").val(id);
+
+            $.ajax({
+                url: "/api/Faculty/" + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (faculty) {
+                    return faculty;
+                },
+                error: function (request, message, error) {
+                    handleException(request, message, error);
+                    return null;
+                }
+            });
+        }
+
         function handleException(request, message,
             error) {
             var msg = "";
@@ -185,24 +197,19 @@
             alert(msg);
         }
         $(document).ready(function () {
-            facultyList();
+            departmentList();
         });
 
-        function facultyGet(ctl) {
-            // Get faculty id from data- attribute
+        function departmentGet(ctl) {
             var id = $(ctl).data("id");
-            // Store faculty id in hidden field
-            $("#facultyid").val(id);
-            // Call Web API to get a list of Faculties
+            $("#departmentid").val(id);
             $.ajax({
-                url: "/api/Faculty/" + id,
+                url: "/api/Department/" + id,
                 type: 'GET',
                 dataType: 'json',
-                success: function (faculty) {
-                    console.log(faculty);
-                    facultyToFields(faculty);
+                success: function (department) {
+                    departmentToFields(department);
 
-                    // Change Update Button Text
                     $("#updateButton").text("Update");
                 },
                 error: function (request, message, error) {
@@ -210,27 +217,24 @@
                 }
             });
         }
-        function facultyToFields(faculty) {
-            $("#facultyname").val(faculty.Name);
+        function departmentToFields(department) {
+            //to do
+            $("#facultyname").val(department.Name);
         }
-        function facultyUpdateInTable(faculty) {
-            // Find Faculty in <table>
-            var row = $("#facultyTable button[data-id='" +
-                faculty.Id + "']").parents("tr")[0];
-            // Add changed Faculty to table
-            $(row).after(facultyBuildTableRow(faculty));
-            // Remove original Faculty
+        function departmentUpdateInTable(facudepartmentlty) {
+            var row = $("#departmentTable button[data-id='" +
+                department.Id + "']").parents("tr")[0];
+            $(row).after(departmentBuildTableRow(department));
             $(row).remove();
-            formClear(); // Clear form fields
-            // Change Update Button Text
+            formClear();
             $("#updateButton").text("Add");
         }
-        function facultyDelete(ctl) {
+        function departmentDelete(ctl) {
             var id = $(ctl).data("id");
             $.ajax({
-                url: "/api/Faculty/" + id,
+                url: "/api/Department/" + id,
                 type: 'DELETE',
-                success: function (faculty) {
+                success: function (department) {
                     $(ctl).parents("tr").remove();
                 },
                 error: function (request, message, error) {
