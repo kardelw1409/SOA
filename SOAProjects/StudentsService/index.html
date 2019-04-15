@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Web API2 KnockOutJS</title>
+    <title>Student Service</title>
     <meta charset="utf-8" />
 
     <!-- CSS -->
@@ -47,29 +47,29 @@
                         <form>
 
                             <div class="form-group">
-                                <label for="Id">Student ID</label>
-                                <input type="text" id="Id" class="form-control" data-bind="value: Id" placeholder="Student ID" />
-                            </div><!-- END CUSTOMER ID -->
+                                <label for="Course">Course</label>
+                                <input type="number" id="Course" class="form-control" data-bind="value: Course" placeholder="Course" />
+                            </div><!-- END Course -->
 
                             <div class="form-group">
                                 <label for="Enrolled">Enrolled</label>
-                                <input type="datetime" id="Enrolled" class="form-control" data-bind="value: Enrolled" placeholder="Enrolled" />
-                            </div><!-- END FIRST NAME -->
+                                <input type="datetime-local" id="Enrolled" class="form-control" data-bind="value: Enrolled" placeholder="Enrolled" />
+                            </div><!-- END Enrolled -->
 
                             <div class="form-group">
-                                <label for="Course">Course</label>
-                                <input type="number" id="Course" class="form-control" data-bind="value: Course" placeholder="Course" />
-                            </div><!-- END LAST NAME -->
+                                <label for="GroupId">Group ID</label>
+                                <input type="number" id="GroupId" class="form-control" data-bind="value: GroupId" placeholder="Group ID" />
+                            </div> <!-- END GroupId -->
 
                             <div class="form-group">
                                 <label for="RoomId">Room ID</label>
                                 <input type="number" id="RoomId" class="form-control" data-bind="value: Roomid" placeholder="Room ID" />
-                            </div> <!-- END EMAIL -->
+                            </div> <!-- END RoomId -->
 
                             <div class="form-group">
-                                <label for="GroupId">Group ID</label>
-                                <input type="number" id="GroupId" class="form-control" data-bind="value: GroupId" placeholder="Group ID"/>
-                            </div> <!-- END COUNTRY -->
+                                <label for="Id">Student ID</label>
+                                <input type="number" id="Id" class="form-control" data-bind="value: Id" placeholder="Student ID" />
+                            </div><!-- END ID -->
 
 
                             <button type="button" class="btn btn-success" data-bind="click: addNewStudent" id="Save">
@@ -118,11 +118,11 @@
                             <thead>
                                 <tr>
                                     <th><span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span></th>
-                                    <th>#ID</th>
-                                    <th>Enrolled</th>
                                     <th>Course</th>
-                                    <th>Room ID</th>
+                                    <th>Enrolled</th>
                                     <th>Group ID</th>
+                                    <th>Room ID</th>
+                                    <th>#ID</th>
                                     <th></th>
                                 </tr>
                             </thead> <!-- END THEAD -->
@@ -132,12 +132,11 @@
                                 <tr>
 
                                     <td> <button type="button" class="btn btn-default btn-xs" data-bind="click: $root.detailStudent"> <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span></button> </td>
-                                    <td> <span data-bind="text: Id"></span> </td>
-                                    <td> <span data-bind="text: Enrolled"></span></td>
                                     <td> <span data-bind="text: Course"></span></td>
-                                    <td> <span data-bind="text: RoomId"></span> </td>
+                                    <td> <span data-bind="text: Enrolled"></span></td>
                                     <td> <span data-bind="text: GroupId"></span> </td>
-
+                                    <td> <span data-bind="text: RoomId"></span> </td>
+                                    <td> <span data-bind="text: Id"></span> </td>
                                     <td>
 
                                         <button type="button" class="btn btn-danger btn-xs">

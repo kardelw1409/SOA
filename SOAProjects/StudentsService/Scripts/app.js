@@ -1,11 +1,11 @@
 ﻿var ViewModel = function () {  
   
-    var self = this;  
-    self.Id = ko.observable();  
+    var self = this;
+    self.Course = ko.observable();
     self.Enrolled = ko.observable();
-    self.Course = ko.observable();  
     self.GroupId = ko.observable();  
     self.Roomid = ko.observable();
+    self.Id = ko.observable();
     
   
     self.studentList = ko.observableArray([]);  
@@ -32,23 +32,23 @@
   
   
     // Clear Fields  
-    self.clearFields = function clearFields() {  
-        self.Id('');  
-        self.Enrolled('');  
-        self.Course('');  
-        self.GroupId('');  
-        self.Roomid('');  
+    self.clearFields = function clearFields() {
+        self.Course('');
+        self.Enrolled('');
+        self.GroupId('');
+        self.Roomid('');
+        self.Id(''); 
     }  
   
     //Add new Student  
     self.addNewStudent = function addNewStudent(newStudent) {  
   
-        var StudObject = {  
-            Id: self.Id(),  
-            Enrolled: self.Enrolled(),  
-            Course: self.Course(),  
+        var StudObject = {
+            Course: self.Course(),
+            Enrolled: self.Enrolled(),
             GroupId: self.GroupId(),  
-            Roomid: self.Roomid()  
+            Roomid: self.Roomid(),
+            Id: self.Id()
         };  
         ajaxFunction(StudentUri, 'POST', StudObject).done(function () {  
   
@@ -70,12 +70,11 @@
   
     //Get Detail Student  
     self.detailStudent = function (selectedStudent) {  
-  
-        self.Id(selectedStudent.Id);  
-        self.Enrolled(selectedStudent.Enrolled);  
-        self.Course(selectedStudent.Course);  
+        self.Course(selectedStudent.Course);
+        self.Enrolled(selectedStudent.Enrolled);
         self.Roomid(selectedStudent.Roomid);  
-        self.GroupId(selectedStudent.GroupId);  
+        self.GroupId(selectedStudent.GroupId);
+        self.Id(selectedStudent.Id);
   
         $('#Save').hide();  
         $('#Clear').hide();  
@@ -99,12 +98,12 @@
     //Update Student  
     self.updateStudent = function () {  
   
-        var StudObject = {  
-            Id: self.Id(),  
-            Enrolled: self.Enrolled(),  
-            Course: self.Course(),  
+        var StudObject = {
+            Course: self.Course(),
+            Enrolled: self.Enrolled(),
             Roomid: self.Roomid(),  
-            GroupId: self.GroupId()  
+            GroupId: self.GroupId(),
+            Id: self.Id()
         };  
   
         ajaxFunction(StudentUri + self.Id(), 'PUT', StudObject).done(function () {  
