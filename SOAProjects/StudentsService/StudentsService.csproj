@@ -130,8 +130,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
-    <Content Include="Scripts\app.js" />
+    <Content Include="Groups.html" />
+    <Content Include="Scripts\controllers\Groups.js" />
+    <Content Include="Students.html" />
+    <Content Include="Scripts\controllers\Students.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
