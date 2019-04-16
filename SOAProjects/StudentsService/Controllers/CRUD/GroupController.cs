@@ -41,19 +41,20 @@ namespace StudentsService.Controllers
         [ResponseType(typeof(Group))]
         public async override Task<IHttpActionResult> PostEntity(Group entity)
         {
-            if (!ModelState.IsValid)
+            return await base.PostEntity(entity);
+            /*if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             SpecialityHttpService httpService = new SpecialityHttpService("http://localhost:65357/");
-            SpecialityDTO speciality = await httpService.GetProductAsync($"api/Speciality/{entity.SpecialityId}");
+            SpecialityDTO speciality = await httpService.GetProductAsync($"api/Groups/{entity.SpecialityId}");
             if (speciality == null)
             {
                 return NotFound();
             }
             await service.Create(entity);
 
-            return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);
+            return CreatedAtRoute("DefaultApi", new { id = entity.Id }, entity);*/
         }
 
         [ResponseType(typeof(void))]

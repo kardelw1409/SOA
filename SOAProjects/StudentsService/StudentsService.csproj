@@ -131,7 +131,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Groups.html" />
+    <Content Include="Performances.html" />
     <Content Include="Scripts\controllers\Groups.js" />
+    <Content Include="Scripts\controllers\Performance.js" />
+    <Content Include="Student-Service.html" />
     <Content Include="Students.html" />
     <Content Include="Scripts\controllers\Students.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
