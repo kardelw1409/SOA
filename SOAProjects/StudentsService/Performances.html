@@ -11,7 +11,7 @@
 
     <!-- CSS -->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
 
@@ -25,7 +25,7 @@
         <div class="container-fluid">
 
             <div class="navbar-header">
-                
+
                 <a class="navbar-brand" href="Student-Service.html">WEB API2 - KnockOutJS</a>
             </div> <!-- END HEADER NAV -->
 
@@ -43,38 +43,33 @@
                 <!-- FORM -->
                 <div class="panel panel-default">
 
-                    <div class="panel-heading"> <span class="glyphicon glyphicon glyphicon-tag" aria-hidden="true"></span> <b>Add New Student</b></div>
+                    <div class="panel-heading"> <span class="glyphicon glyphicon glyphicon-tag" aria-hidden="true"></span> <b>Add New Performance</b></div>
                     <div class="panel-body">
 
                         <form>
 
                             <div class="form-group">
-                                <label for="Course">Course</label>
-                                <input type="number" id="Course" class="form-control" data-bind="value: Course" placeholder="Course" />
-                            </div><!-- END Course -->
+                                <label for="IsDone">IsDone</label>
+                                <input type="number" id="IsDone" class="form-control" data-bind="value: IsDone" placeholder="IsDone" />
+                            </div><!-- END IsDone -->
 
                             <div class="form-group">
-                                <label for="Enrolled">Enrolled</label>
-                                <input type="datetime" id="Enrolled" class="form-control" data-bind="value: Enrolled" placeholder="Enrolled" />
-                            </div><!-- END Enrolled -->
+                                <label for="SubjectId">SubjectId</label>
+                                <input type="number" id="SubjectId" class="form-control" data-bind="value: SubjectId" placeholder="SubjectId" />
+                            </div><!-- END SubjectId -->
 
                             <div class="form-group">
-                                <label for="GroupId">Group ID</label>
-                                <input type="number" id="GroupId" class="form-control" data-bind="value: GroupId" placeholder="Group ID" />
-                            </div> <!-- END GroupId -->
+                                <label for="StudentId">Student ID</label>
+                                <input type="number" id="StudentId" class="form-control" data-bind="value: StudentId" placeholder="Student ID" />
+                            </div> <!-- END StudentId -->
 
-                            <div class="form-group">
-                                <label for="RoomId">Room ID</label>
-                                <input type="number" id="RoomId" class="form-control" data-bind="value: RoomId" placeholder="Room ID" />
-                            </div> <!-- END RoomId -->
-
-                            <!--<div class="form-group">
-                                <label for="Id">Student ID</label>
-                                <input type="number" id="Id" class="form-control" data-bind="value: Id" placeholder="Student ID" />
-                            </div> END ID -->
+                            <!-- <div class="form-group">
+                                 <label for="Id">Student ID</label>
+                                 <input type="number" id="Id" class="form-control" data-bind="value: Id" placeholder="Student ID" />
+                             </div> END ID -->
 
 
-                            <button type="button" class="btn btn-success" data-bind="click: addNewStudent" id="Save">
+                            <button type="button" class="btn btn-success" data-bind="click: addNewPerformance" id="Save">
                                 <span class="glyphicon  glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                             </button>
 
@@ -82,11 +77,11 @@
                                 <span class="glyphicon  glyphicon glyphicon-refresh" aria-hidden="true"></span> Clear
                             </button>
 
-                            <button type="button" class="btn btn-warning" data-bind="click: updateStudent" style="display : none" id="Update">
-                                <span class="glyphicon  glyphicon glyphicon-pencil" aria-hidden="true"></span> Update Student
+                            <button type="button" class="btn btn-warning" data-bind="click: updatePerformance" style="display : none" id="Update">
+                                <span class="glyphicon  glyphicon glyphicon-pencil" aria-hidden="true"></span> Update Performance
                             </button>
 
-                            <button type="button" class="btn btn-default" data-bind="click: cancel "  id="Cancel">
+                            <button type="button" class="btn btn-default" data-bind="click: cancel " id="Cancel">
                                 <span class="glyphicon  glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
                             </button>
 
@@ -99,7 +94,7 @@
 
             </div> <!-- END  col-md-4 -->
 
-           
+
 
         </div>
 
@@ -110,7 +105,7 @@
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
-                        <span class="glyphicon  glyphicon glyphicon-zoom-in" aria-hidden="true"></span>  <b>Students List </b>
+                        <span class="glyphicon  glyphicon glyphicon-zoom-in" aria-hidden="true"></span>  <b>Performance List </b>
                     </div>
 
                     <div class="panel-body">
@@ -120,26 +115,24 @@
                             <thead>
                                 <tr>
                                     <th><span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span></th>
-                                    <th>Course</th>
-                                    <th>Enrolled</th>
-                                    <th>Group ID</th>
-                                    <th>Room ID</th>
+                                    <th>IsDone</th>
+                                    <th>Subject ID</th>
+                                    <th>Student ID</th>
                                     <th>#ID</th>
                                     <th></th>
                                 </tr>
                             </thead> <!-- END THEAD -->
 
-                            <tbody data-bind="foreach: studentList">
+                            <tbody data-bind="foreach: PerformanceList">
 
                                 <tr>
-                                    <td> <button type="button" class="btn btn-warning" data-bind="click: $root.detailStudent"> <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>Edit</button> </td>
-                                    <td> <span data-bind="text: Course"></span></td>
-                                    <td> <span data-bind="text: Enrolled"></span></td>
-                                    <td> <span data-bind="text: GroupId"></span> </td>
-                                    <td> <span data-bind="text: RoomId"></span> </td>
+                                    <td> <button type="button" class="btn btn-warning" data-bind="click: $root.detailPerformance"> <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>Edit</button> </td>
+                                    <td> <span data-bind="text: IsDone"></span></td>
+                                    <td> <span data-bind="text: SubjectId"></span></td>
+                                    <td> <span data-bind="text: StudentId"></span> </td>
                                     <td> <span data-bind="text: Id"></span> </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger" data-bind="click: $root.deleteStudent">
+                                        <button type="button" class="btn btn-danger" data-bind="click: $root.deletePerformance">
                                             <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
                                             Delete
                                         </button>
@@ -174,7 +167,7 @@
 
 
     <!-- app.js-->
-    <script src="Scripts/controllers/Students.js"></script>
+    <script src="Scripts/controllers/Performance.js"></script>
 
 
 </body>
