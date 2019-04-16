@@ -11,15 +11,16 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Специальности</h2>
-                <table id="specialityTable"
+                <h2>Предметы</h2>
+                <table id="subjectTable"
                        class="table table-bordered
                  table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Название специальности</th>
-                            <th>План</th>
-                            <th>Факультет</th>
+                            <th>Название предмета</th>
+                            <th>Экзамен?</th>
+                            <th>Зачет?</th>
+                            <th>Кафедра</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -30,17 +31,21 @@
         <br>
         <div class="panel panel-primary">
             <div class="panel-info">
-                <h3>Добавление специальности</h3>
+                <h3>Добавление предмета</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <input type="hidden" id="specialityid" value="0" />
-                    <label for="specialityname">Название</label>
-                    <input type="text" id="specialityname" class="form-control" />
-                    <label for="specialityplan">План</label>
-                    <input type="text" id="specialityplan" class="form-control" />
-                    <label for="faculty">Факультет</label>
-                    <select id="faculty" name="speciality-drop" class="form-control"></select>
+                    <input type="hidden" id="subjectid" value="0" />
+                    <label for="subjectname">Название</label>
+                    <input type="text" id="subjectname" class="form-control" />
+                    <label for="subjectexam">Экзамен?</label>
+                    <input type="checkbox" id="subjectexam" />
+                    <br>
+                    <label for="subjectcredit">Зачет?</label>
+                    <input type="checkbox" id="subjectcredit" />
+                    <br>
+                    <label for="department">Кафедра</label>
+                    <select id="department" name="department-drop" class="form-control"></select>
                 </div>
             </div>
             <div class="panel-footer">
@@ -56,49 +61,50 @@
     <script>
 
         function clearDrop() {
-            $("select[id$=faculty] > option").remove();
+            $("select[id$=department] > option").remove();
         }
 
         function updateClick() {
-            Speciality = new Object();
-            Speciality.Id = $("#specialityid").val();
-            Speciality.Name = $("#specialityname").val();
-            Speciality.Plan = $("#specialityplan").val();
-            Speciality.FacultyId = $("#faculty option:selected").val();
-            if ((Speciality.Name.length != 0) && (Speciality.Plan.length != 0) && (typeof Speciality.Plan == 'number')) {
+            Subject = new Object();
+            Subject.Id = $("#subjectid").val();
+            Subject.Name = $("#subjectname").val();
+            Subject.IsExam = $('#subjectexam').prop('checked');
+            Subject.IsCredit = $("#subjectcredit").prop('checked');
+            Subject.DepartmentId = $("#department option:selected").val();
+            if (Subject.Name.length != 0) {
                 if ($("#updateButton").text().trim() ==
                     "Add") {
-                    specialityAdd(Speciality);
+                    subjectAdd(Subject);
                 }
                 else {
-                    specialityUpdate(Speciality);
+                    subjectUpdate(Subject);
 
                 }
             }
             else {
-                alert("Поле пустое либо неверные данные");
+                alert("Поле пустое");
             }
 
 
         }
-        function specialityUpdate(speciality) {
+        function subjectUpdate(subject) {
             $.ajax({
-                url: "/api/Speciality",
+                url: "/api/Subject",
                 type: 'PUT',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(speciality),
-                success: function (speciality) {
-                    console.log(speciality);
-                    specialityUpdateSuccess(speciality);
+                data: JSON.stringify(subject),
+                success: function (subject) {
+
+                    subjectUpdateSuccess(subject);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function specialityUpdateSuccess(speciality) {
-            specialityUpdateInTable(speciality);
+        function subjectUpdateSuccess(subject) {
+            subjectUpdateInTable(subject);
         }
 
         function addClick() {
@@ -107,23 +113,22 @@
 
         function dropDown() {
             $(function () {
-                var data = facultyList();
-                console.log(data);
+                var data = departmentList();
                 $.each(data, function (i, option) {
-                    $('#faculty').append($('<option/>').attr("value", option.Id).text(option.Name));
+                    $('#department').append($('<option/>').attr("value", option.Id).text(option.Name));
                 });
             })
         }
 
-        function specialityAdd(speciality) {
+        function subjectAdd(subject) {
             $.ajax({
-                url: "/api/Speciality",
+                url: "/api/Subject",
                 type: 'POST',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(speciality),
-                success: function (speciality) {
-                    specialityAddSuccess(speciality);
+                data: JSON.stringify(subject),
+                success: function (subject) {
+                    subjectAddSuccess(subject);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
@@ -131,63 +136,63 @@
             });
         }
         function formClear() {
-            $("#specialityname").val("");
-            $("#specialityplan").val("");
+            $("#subjectname").val("");
             clearDrop();
         }
-        function specialityAddSuccess(speciality) {
-            specialityAddRow(speciality);
+        function subjectAddSuccess(subject) {
+            subjectAddRow(subject);
             formClear();
             dropDown();
 
         }
-        function specialityList() {
+        function subjectList() {
 
             $.ajax({
-                url: '/api/Speciality/',
+                url: '/api/Subject/',
                 type: 'GET',
                 dataType: 'json',
-                success: function (specialities) {
+                success: function (subjects) {
 
-                    specialityListSuccess(specialities);
+                    subjectListSuccess(subjects);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function specialityListSuccess(specialities) {
-            $.each(specialities, function (index, speciality) {
-                specialityAddRow(speciality);
+        function subjectListSuccess(subjects) {
+            $.each(subjects, function (index, subject) {
+                subjectAddRow(subject);
             });
         }
-        function specialityAddRow(speciality) {
-            if ($("#specialityTable tbody").length == 0) {
-                $("#specialityTable").append("<tbody></tbody>");
+        function subjectAddRow(subject) {
+            if ($("#subjectTable tbody").length == 0) {
+                $("#subjectTable").append("<tbody></tbody>");
             }
-            $("#specialityTable tbody").append(
-                specialityBuildTableRow(speciality));
+            $("#subjectTable tbody").append(
+                subjectBuildTableRow(subject));
         }
 
-        function specialityBuildTableRow(speciality) {
+        function subjectBuildTableRow(subject) {
 
             var ret =
                 "<tr>" +
-                "<td>" + speciality.Name +
-                "</td>" + "<td>" + speciality.Plan +
-                "</td>" + "<td>" + facultyGet(speciality.FacultyId).Name +
+                "<td>" + subject.Name +
+                "</td>" + "<td>" + subject.IsExam +
+                        "</td>" + "<td>" + subject.IsCredit +
+                "</td>" +  "<td>" + departmentGet(subject.DepartmentId).Name +
                 "</td>"
                 + "<td><button type='button' " +
-                "onclick='specialityGet(this);' " +
+                "onclick='subjectGet(this);' " +
                 "class='btn btn-primary' " +
-                "data-id =" + speciality.Id + ">" +
+                "data-id =" + subject.Id + ">" +
                 "Edit"
                 + "</button></td>" +
                 "<td>" +
                 "<button type='button' " +
-                "onclick='specialityDelete(this);' " +
+                "onclick='subjectDelete(this);' " +
                 "class='btn btn-primary' " +
-                "data-id='" + speciality.Id + "'>" +
+                "data-id='" + subject.Id + "'>" +
                 "Delete" +
                 "</button>" +
                 "</td>" +
@@ -195,17 +200,17 @@
             return ret;
         }
 
-        function facultyGet(id) {
+        function departmentGet(id) {
 
             //$("#facultyid").val(id);
             var obj;
             $.ajax({
-                url: "/api/Faculty/" + id,
+                url: "/api/Department/" + id,
                 type: 'GET',
                 dataType: 'json',
                 async: false,
-                success: function (faculty) {
-                    obj = faculty;
+                success: function (department) {
+                    obj = department;
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
@@ -215,16 +220,15 @@
             return obj;
         }
 
-        function facultyList() {
+        function departmentList() {
             var obj;
-            // Call Web API to get a list of Faculty
             $.ajax({
-                url: '/api/Faculty/',
+                url: '/api/Department/',
                 type: 'GET',
                 dataType: 'json',
                 async: false,
-                success: function (faculties) {
-                    obj = faculties;
+                success: function (departments) {
+                    obj = departments;
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
@@ -245,19 +249,19 @@
             alert(msg);
         }
         $(document).ready(function () {
-            specialityList();
+            subjectList();
             dropDown();
         });
 
-        function specialityGet(ctl) {
+        function subjectGet(ctl) {
             var id = $(ctl).data("id");
-            $("#specialityid").val(id);
+            $("#subjectid").val(id);
             $.ajax({
-                url: "/api/Speciality/" + id,
+                url: "/api/Subject/" + id,
                 type: 'GET',
                 dataType: 'json',
-                success: function (speciality) {
-                    specialityToFields(speciality);
+                success: function (subject) {
+                    subjectToFields(subject);
 
                     $("#updateButton").text("Update");
                 },
@@ -266,26 +270,27 @@
                 }
             });
         }
-        function specialityToFields(speciality) {
+        function subjectToFields(subject) {
             //to do
-            $("#specialityname").val(speciality.Name);
-            $("#specialityplan").val(speciality.Plan);
-            $("#faculty").val(speciality.FacultyId);
+            $("#subjectname").val(subject.Name);
+            $("#subjectexam").prop('checked', subject.IsExam);
+            $("#subjectcredit").prop('checked', subject.IsCredit);
+            $("#department").val(subject.DepartmentId);
         }
-        function specialityUpdateInTable(speciality) {
-            var row = $("#specialityTable button[data-id='" +
-                speciality.Id + "']").parents("tr")[0];
-            $(row).after(specialityBuildTableRow(speciality));
+        function subjectUpdateInTable(subject) {
+            var row = $("#subjectTable button[data-id='" +
+                subject.Id + "']").parents("tr")[0];
+            $(row).after(subjectBuildTableRow(subject));
             $(row).remove();
             formClear();
             $("#updateButton").text("Add");
         }
-        function specialityDelete(ctl) {
+        function subjectDelete(ctl) {
             var id = $(ctl).data("id");
             $.ajax({
-                url: "/api/Speciality/" + id,
+                url: "/api/Subject/" + id,
                 type: 'DELETE',
-                success: function (speciality) {
+                success: function (subject) {
                     $(ctl).parents("tr").remove();
                 },
                 error: function (request, message, error) {
