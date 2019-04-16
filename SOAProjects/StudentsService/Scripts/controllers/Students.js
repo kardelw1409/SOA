@@ -123,7 +123,23 @@
         })  
   
     }  
-  
+    function groupList() {
+        var obj;
+        // Call Web API to get a list of Groups
+        $.ajax({
+            url: '/api/Groups/',
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (groups) {
+                obj = groups;
+            },
+            error: function (request, message, error) {
+                handleException(request, message, error);
+            }
+        });
+        return obj;
+    }
     
     getStudentList();
   
