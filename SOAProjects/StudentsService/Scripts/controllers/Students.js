@@ -5,7 +5,7 @@
     self.Enrolled = ko.observable();
     self.GroupId = ko.observable();  
     self.RoomId = ko.observable();
-    self.Id = ko.observable();
+    //self.Id = ko.observable();
     
   
     self.studentList = ko.observableArray([]);  
@@ -37,7 +37,7 @@
         self.Enrolled('');
         self.GroupId('');
         self.RoomId('');
-        self.Id(''); 
+        //self.Id(''); 
     }  
   
     //Add new Student  
@@ -48,7 +48,7 @@
             Enrolled: self.Enrolled(),
             GroupId: self.GroupId(),  
             RoomId: self.RoomId(),
-            Id: self.Id()
+           // Id: self.Id()
         };  
         ajaxFunction(StudentUri, 'POST', StudObject).done(function () {  
   
@@ -74,7 +74,7 @@
         self.Enrolled(selectedStudent.Enrolled);
         self.GroupId(selectedStudent.GroupId);
         self.RoomId(selectedStudent.RoomId);  
-        self.Id(selectedStudent.Id);
+        //self.Id(selectedStudent.Id);
   
         $('#Save').hide();  
         $('#Clear').hide();  
@@ -96,23 +96,23 @@
     }  
   
     //Update Student  
-    self.updateStudent = function () {  
-  
+    self.updateStudent = function (){  
         var StudObject = {
             Course: self.Course(),
             Enrolled: self.Enrolled(),
             GroupId: self.GroupId(),
             RoomId: self.RoomId(),
-            Id: self.Id()
+           // Id: self.Id()
         };
   
-        ajaxFunction(StudentUri + self.Id(), 'PUT', StudObject).done(function () {  
+        ajaxFunction(StudentUri, 'PUT', StudObject).done(function () {  
             alert('Student Updated Successfully !');  
-            getStudentList();  
-            self.cancel();  
+            self.cancel();
+            getStudentList();
         });  
     }  
   
+   
     //Delete Student  
     self.deleteStudent = function (student) {  
   
