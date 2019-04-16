@@ -11,13 +11,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Кафедры</h2>
-                <table id="departmentTable"
+                <h2>Специальности</h2>
+                <table id="specialityTable"
                        class="table table-bordered
                  table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th>Название кафедры</th>
+                            <th>Название специальности</th>
+                            <th>План</th>
                             <th>Факультет</th>
                             <th></th>
                             <th></th>
@@ -29,15 +30,17 @@
         <br>
         <div class="panel panel-primary">
             <div class="panel-info">
-                <h3>Добавление кафедры</h3>
+                <h3>Добавление специальности</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <input type="hidden" id="departmentid" value="0" />
-                    <label for="departmentname">Название</label>
-                    <input type="text" id="departmentname" class="form-control" />
+                    <input type="hidden" id="specialityid" value="0" />
+                    <label for="specialityname">Название</label>
+                    <input type="text" id="specialityname" class="form-control" />
+                    <label for="specialityplan">План</label>
+                    <input type="text" id="specialityplan" class="form-control" />
                     <label for="faculty">Факультет</label>
-                    <select id="faculty" name="faculty-drop" class="form-control"></select>
+                    <select id="faculty" name="speciality-drop" class="form-control"></select>
                 </div>
             </div>
             <div class="panel-footer">
@@ -56,44 +59,45 @@
         }
 
         function updateClick() {
-            Department = new Object();
-            Department.Id = $("#departmentid").val();
-            Department.Name = $("#departmentname").val();
-            Department.FacultyId = $("#faculty option:selected").val();
-            if (Department.Name.length != 0) {
+            Speciality = new Object();
+            Speciality.Id = $("#specialityid").val();
+            Speciality.Name = $("#specialityname").val();
+            Speciality.Plan = $("#specialityplan").val();
+            Speciality.FacultyId = $("#faculty option:selected").val();
+            if ((Speciality.Name.length != 0) && (Speciality.Plan.length != 0) && (typeof Speciality.Plan == 'number')) {
                 if ($("#updateButton").text().trim() ==
                     "Add") {
-                    departmentAdd(Department);
+                    specialityAdd(Speciality);
                 }
                 else {
-                    departmentUpdate(Department);
+                    specialityUpdate(Speciality);
 
                 }
             }
             else {
-                alert("Поле пустое");
+                alert("Поле пустое либо неверные данные");
             }
 
 
         }
-        function departmentUpdate(department) {
+        function specialityUpdate(speciality) {
             $.ajax({
-                url: "/api/Department",
+                url: "/api/Speciality",
                 type: 'PUT',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(department),
-                success: function (department) {
-                    console.log(department);
-                    departmentUpdateSuccess(department);
+                data: JSON.stringify(speciality),
+                success: function (speciality) {
+                    console.log(speciality);
+                    specialityUpdateSuccess(speciality);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function departmentUpdateSuccess(department) {
-            departmentUpdateInTable(department);
+        function specialityUpdateSuccess(speciality) {
+            specialityUpdateInTable(speciality);
         }
 
         function addClick() {
@@ -103,21 +107,22 @@
         function dropDown() {
             $(function () {
                 var data = facultyList();
+                console.log(data);
                 $.each(data, function (i, option) {
                     $('#faculty').append($('<option/>').attr("value", option.Id).text(option.Name));
                 });
             })
         }
 
-        function departmentAdd(department) {
+        function specialityAdd(speciality) {
             $.ajax({
-                url: "/api/Department",
+                url: "/api/Speciality",
                 type: 'POST',
                 contentType:
                     "application/json;charset=utf-8",
-                data: JSON.stringify(department),
-                success: function (department) {
-                    departmentAddSuccess(department);
+                data: JSON.stringify(speciality),
+                success: function (speciality) {
+                    specialityAddSuccess(speciality);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
@@ -125,61 +130,63 @@
             });
         }
         function formClear() {
-            $("#departmentname").val("");
+            $("#specialityname").val("");
+            $("#specialityplan").val("");
             clearDrop();
         }
-        function departmentAddSuccess(department) {
-            departmentAddRow(department);
+        function specialityAddSuccess(speciality) {
+            specialityAddRow(speciality);
             formClear();
             dropDown();
 
         }
-        function departmentList() {
+        function specialityList() {
 
             $.ajax({
-                url: '/api/Department/',
+                url: '/api/Speciality/',
                 type: 'GET',
                 dataType: 'json',
-                success: function (departments) {
-                    departmentListSuccess(departments);
+                success: function (specialities) {
+
+                    specialityListSuccess(specialities);
                 },
                 error: function (request, message, error) {
                     handleException(request, message, error);
                 }
             });
         }
-        function departmentListSuccess(departments) {
-            dropDown();
-            $.each(departments, function (index, department) {
-                departmentAddRow(department);
+        function specialityListSuccess(specialities) {
+            $.each(specialities, function (index, speciality) {
+                specialityAddRow(speciality);
             });
         }
-        function departmentAddRow(department) {
-            if ($("#departmentTable tbody").length == 0) {
-                $("#departmentTable").append("<tbody></tbody>");
+        function specialityAddRow(speciality) {
+            if ($("#specialityTable tbody").length == 0) {
+                $("#specialityTable").append("<tbody></tbody>");
             }
-            $("#departmentTable tbody").append(
-                departmentBuildTableRow(department));
+            $("#specialityTable tbody").append(
+                specialityBuildTableRow(speciality));
         }
 
-        function departmentBuildTableRow(department) {
-            console.log(department);
+        function specialityBuildTableRow(speciality) {
+
             var ret =
                 "<tr>" +
-                "<td>" + department.Name +
-                "</td>" + "<td>" + facultyGet(department.FacultyId).Name +
+                "<td>" + speciality.Name +
+                "</td>" + "<td>" + speciality.Plan +
+                "</td>" + "<td>" + facultyGet(speciality.FacultyId).Name +
                 "</td>"
                 + "<td><button type='button' " +
-                "onclick='departmentGet(this);' " +
+                "onclick='specialityGet(this);' " +
                 "class='btn btn-primary' " +
-                "data-id =" + department.Id + ">" +
+                "data-id =" + speciality.Id + ">" +
                 "Edit"
                 + "</button></td>" +
                 "<td>" +
                 "<button type='button' " +
-                "onclick='departmentDelete(this);' " +
+                "onclick='specialityDelete(this);' " +
                 "class='btn btn-primary' " +
-                "data-id='" + department.Id + "'>" +
+                "data-id='" + speciality.Id + "'>" +
                 "Delete" +
                 "</button>" +
                 "</td>" +
@@ -237,18 +244,19 @@
             alert(msg);
         }
         $(document).ready(function () {
-            departmentList();
+            specialityList();
+            dropDown();
         });
 
-        function departmentGet(ctl) {
+        function specialityGet(ctl) {
             var id = $(ctl).data("id");
-            $("#departmentid").val(id);
+            $("#specialityid").val(id);
             $.ajax({
-                url: "/api/Department/" + id,
+                url: "/api/Speciality/" + id,
                 type: 'GET',
                 dataType: 'json',
-                success: function (department) {
-                    departmentToFields(department);
+                success: function (speciality) {
+                    specialityToFields(speciality);
 
                     $("#updateButton").text("Update");
                 },
@@ -257,25 +265,26 @@
                 }
             });
         }
-        function departmentToFields(department) {
+        function specialityToFields(speciality) {
             //to do
-            $("#departmentname").val(department.Name);
-            $("#faculty").val(department.FacultyId);
+            $("#specialityname").val(speciality.Name);
+            $("#specialityplan").val(speciality.Plan);
+            $("#faculty").val(speciality.FacultyId);
         }
-        function departmentUpdateInTable(department) {
-            var row = $("#departmentTable button[data-id='" +
-                department.Id + "']").parents("tr")[0];
-            $(row).after(departmentBuildTableRow(department));
+        function specialityUpdateInTable(speciality) {
+            var row = $("#specialityTable button[data-id='" +
+                speciality.Id + "']").parents("tr")[0];
+            $(row).after(specialityBuildTableRow(speciality));
             $(row).remove();
             formClear();
             $("#updateButton").text("Add");
         }
-        function departmentDelete(ctl) {
+        function specialityDelete(ctl) {
             var id = $(ctl).data("id");
             $.ajax({
-                url: "/api/Department/" + id,
+                url: "/api/Speciality/" + id,
                 type: 'DELETE',
-                success: function (department) {
+                success: function (speciality) {
                     $(ctl).parents("tr").remove();
                 },
                 error: function (request, message, error) {
